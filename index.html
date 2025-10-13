@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Paper Universe - Simple</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{--purple:#a259ff;--light:#f7f3fb}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#222}
+
+    .header{background:var(--purple);color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;font-size:22px}
+    .nav a{color:#fff;text-decoration:none;margin-left:18px;font-size:18px}
+
+    .hero{height:300px;background:#eee url('Banner.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff}
+    .hero h1{margin:0;font-size:56px;line-height:1;letter-spacing:0.5px;text-shadow:0 3px 8px rgba(0,0,0,0.35)}
+    .hero p{margin:10px 0 0;font-size:20px}
+
+    .strip{background:#a259ff;color:#fff;padding:14px;text-align:center;font-weight:800;font-size:18px}
+
+    .products{max-width:1100px;margin:26px auto;padding:12px}
+
+    .card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 6px 14px rgba(0,0,0,0.07);text-align:left}
+    .card img{width:100%;height:170px;object-fit:cover;border-radius:6px}
+    .card h4{font-size:18px;margin:12px 0 6px;color:#a259ff}
+    .price{font-weight:900;color:#a259ff;font-size:18px}
+
+    footer{padding:20px;text-align:center;color:#8b7bb0;font-size:16px}
+
+    @media (max-width:992px){
+      .hero{height:260px}
+      .hero h1{font-size:44px}
+      .hero p{font-size:18px}
+      .brand{font-size:20px}
+      .nav a{font-size:16px}
+      .card img{height:150px}
+      .card h4{font-size:17px}
+      .price{font-size:17px}
+    }
+
+    @media (max-width:480px){
+      .hero{height:220px}
+      .hero h1{font-size:36px}
+      .hero p{font-size:16px}
+      .brand{font-size:18px}
+      .nav a{font-size:14px}
+      .card img{height:120px}
+      .card h4{font-size:15px}
+      .price{font-size:15px}
+      .strip{font-size:16px;padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">🪐 Paper Universe</div>
+    <nav class="nav">
+      <a href="#">Inicio</a>
+      <a href="#">Catálogo</a>
+      <a href="#">Servicios</a>
+      <a href="#">Acceder</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Paper Universe</h1>
+      <p>Tu universo de papelería kawaii ✨</p>
+      <p>Paper Universe es una aplicación web inspirada en el mundo de la papelería kawaii, diseñada para ofrecer una experiencia visual encantadora y funcional. Su objetivo es conectar a los amantes de los artículos de papelería con productos únicos, coloridos y llenos de ternura.</p>
+
+      <p>Paper Universe es una tienda en línea dedicada a la venta de artículos de papelería kawaii. En ella encontrarás libretas, lapiceros, agendas y más, todo con diseños adorables y originales. Su diseño web amigable permite una navegación rápida y una experiencia visual mágica, ideal para quienes aman la papelería creativa y colorida.</p>
+    </div>
+  </section>
+
+  <div class="strip">💖 Lo Más Vendido</div>
+
+  <main class="products container">
+    <div class="row">
+      <div class="col-12 col-md-3 mb-3">
+        <article class="card">
+          <img src="capibara.jpg" alt="Capybara">
+          <h4>CAJA LAPICERO X12 — CAPYBARA</h4>
+          <div class="price">$12.000</div>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-3 mb-3">
+        <article class="card">
+          <img src="Sanrio.jpg" alt="Sanrio">
+          <h4>CAJA LAPICERO X12 — SANRIO</h4>
+          <div class="price">$14.000</div>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-3 mb-3">
+        <article class="card">
+          <img src="agenda capibara.jpg" alt="Agenda Capibara">
+          <h4>TIRA LIBRETAS X4 — CAPYBARA</h4>
+          <div class="price">$6.000</div>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-3 mb-3">
+        <article class="card">
+          <img src="Hello kitty.jpg" alt="Hello Kitty">
+          <h4>AGENDA LLAVERO — HELLO KITTY</h4>
+          <div class="price">$10.500</div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>© Paper Universe | Whatsapp: 315 731 2691 | Instagram: paper.universe_24 </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
