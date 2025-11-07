@@ -28,5 +28,3 @@ export const connectDB = async () => {
         console.log("🚀 ~ connectDB ~ error:", error)
     }
 }
-
-connectDB()

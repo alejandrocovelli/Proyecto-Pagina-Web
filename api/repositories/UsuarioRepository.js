@@ -1,5 +1,6 @@
-import { Direccion } from "../models/Direccion"
-import { Usuario } from "../models/Usuario"
+import { sequelize } from "../config/database.js"
+import { Direccion } from "../models/Direccion.js"
+import { Usuario } from "../models/Usuario.js"
 
 export class UsuarioRepository {
     async getUsuarios() {
@@ -14,7 +15,7 @@ export class UsuarioRepository {
                 include: [
                     {
                         model: Direccion,
-                        as: "direccion",
+                        as: "direcciones",
                     }
                 ],
                 transaction

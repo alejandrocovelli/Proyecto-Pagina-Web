@@ -1,4 +1,4 @@
-import { UsuarioRepository } from "../repositories/UsuarioRepository";
+import { UsuarioRepository } from "../repositories/UsuarioRepository.js";
 
 export class UsuarioService {
     constructor() {
