@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database.js";
-import Usuario from './Usuario';
+import { Usuario } from './Usuario.js';
 
 export class Direccion extends Model { }
 
@@ -35,6 +35,3 @@ Direccion.init({
     tableName: 'direccion',
     timestamps: false
 });
-
-Usuario.hasMany(Direccion, { foreignKey: 'idUsuario' });
-Direccion.belongsTo(Usuario, { foreignKey: 'idUsuario' });
