@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database.js";
-import Orden from "./Orden";
-import Producto from "./Producto";
+import { Orden } from "./Orden.js";
+import { Producto } from "./Producto.js";
 
 export class OrdenProducto extends Model { }
 
