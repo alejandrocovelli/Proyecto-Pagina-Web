@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database.js";
-import Usuario from './Usuario';
-import Direccion from './Direccion';
+import { Usuario } from './Usuario.js';
+import { Direccion } from './Direccion.js';
 
 export class Orden extends Model { }
 
