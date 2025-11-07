@@ -1,10 +1,11 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database.js";
-import Orden from "./Orden.js";
-import Producto from "./Producto.js";
+import Orden from "./Orden";
+import Producto from "./Producto";
 
-const OrdenProducto = sequelize.define(
-    "OrdenProducto", 
+export class OrdenProducto extends Model { }
+
+OrdenProducto.init(
     {
         idOrdenProducto: {
             type: DataTypes.INTEGER,
@@ -39,17 +40,17 @@ const OrdenProducto = sequelize.define(
                 key: "idProducto",
             },
         },
-    }, 
+    },
     {
+        sequelize,
         tableName: "ordenProducto",
         timestamps: false,
     }
 );
 
 Orden.hasMany(OrdenProducto, { foreignKey: "idOrden" });
-OrdenProducto.belongsTo(Orden, { foreignKey: "idOrden" });
-
 Producto.hasMany(OrdenProducto, { foreignKey: "idProducto" });
+
+OrdenProducto.belongsTo(Orden, { foreignKey: "idOrden" });
 OrdenProducto.belongsTo(Producto, { foreignKey: "idProducto" });
 
-export default OrdenProducto;
