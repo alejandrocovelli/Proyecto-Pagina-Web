@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { DireccionController } from "../controllers/DireccionController.js"
+import { validateCreateDireccion, validateUpdateDireccion } from "../validators/direccionValidator.js";
+import { validateId } from "../validators/idValidator.js";
 
 const router = Router()
 
@@ -7,15 +9,15 @@ const router = Router()
 router.get("/", DireccionController.getDirecciones)
 
 // Obtener una dirección por ID
-router.get("/:id", DireccionController.getDireccionById)
+router.get("/:id", validateId, DireccionController.getDireccionById)
 
 // Crear una nueva dirección
-router.post("/", DireccionController.createDireccion)
+router.post("/", validateCreateDireccion, DireccionController.createDireccion)
 
 // Actualizar una dirección
-router.put("/:id", DireccionController.updateDireccion)
+router.put("/:id", [...validateId, ...validateUpdateDireccion], DireccionController.updateDireccion)
 
 // Eliminar una dirección
-router.delete("/:id", DireccionController.deleteDireccion)
+router.delete("/:id", validateId, DireccionController.deleteDireccion)
 
 export default router;
