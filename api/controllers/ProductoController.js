@@ -37,7 +37,7 @@ export class ProductoController {
 
     static async createProducto(req, res) {
         try {
-            const result = await productoService.createProducto(req.body)
+            const result = await productoService.createProducto(req.body, req.file);
             if(!result) {
                 return res.status(400).json({ error: "Error al crear el producto" })
             }

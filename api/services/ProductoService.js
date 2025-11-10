@@ -1,4 +1,6 @@
 import { ProductoRepository } from "../repositories/ProductoRepository.js";
+import cloudinary from "../config/cloudinary.js";
+import fs from "fs";
 
 export class ProductoService {
     constructor() {
@@ -15,8 +17,21 @@ export class ProductoService {
         return { success: true, data: producto };
     }
 
-    async createProducto(productoData) {
-        const producto = await this.productoRepository.createProducto(productoData);
+    async createProducto(productoData, file) {
+        let imagenUrl = null;
+        if(file) {
+            const upload = await cloudinary.uploader.upload(file.path, {
+                folder: "productos",
+            });
+            imagenUrl = upload.secure_url;
+            fs.unlinkSync(file.path); //eliminar archivo temporal
+        }
+
+        const productoFinal = {
+            ...productoData,
+            foto: imagenUrl
+        };
+        const producto = await this.productoRepository.createProducto(productoFinal);
         return { success: true, data: producto };
     }
 

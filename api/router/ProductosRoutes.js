@@ -13,7 +13,7 @@ router.get("/", validateGetProduct, ProductoController.getProductos)
 router.get("/:id", validateProductoId, ProductoController.getProductoById)
 
 // Crear un nuevo producto
-router.post("/", validateCreateProducto, ProductoController.createProducto)
+router.post("/", upload.single("imagen"), validateCreateProducto, ProductoController.createProducto)
 
 // Actualizar un producto
 router.put("/:id", [...validateProductoId, ...validateUpdateProducto], ProductoController.updateProducto)
