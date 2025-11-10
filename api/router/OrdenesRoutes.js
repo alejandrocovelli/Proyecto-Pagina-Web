@@ -1,7 +1,6 @@
 import { Router } from "express"
 import { OrdenController } from "../controllers/OrdenController.js"
-import { validateCreateOrden, validateUpdateOrden } from "../validators/ordenValidator.js";
-import { validateId } from "../validators/idValidator.js";
+import { validateCreateOrden, validateOrdenId, validateUpdateOrden } from "../validators/ordenValidator.js";
 
 const router = Router()
 
@@ -9,15 +8,15 @@ const router = Router()
 router.get("/", OrdenController.getOrdenes)
 
 // Obtener una orden por ID
-router.get("/:id", validateId, OrdenController.getOrdenById)
+router.get("/:id", validateOrdenId, OrdenController.getOrdenById)
 
 // Crear una nueva orden
 router.post("/", validateCreateOrden, OrdenController.createOrden)
 
 // Actualizar una orden
-router.put("/:id", [...validateId, ...validateUpdateOrden], OrdenController.updateOrden)
+router.put("/:id", [...validateOrdenId, ...validateUpdateOrden], OrdenController.updateOrden)
 
 // Eliminar una orden
-router.delete("/:id", validateId, OrdenController.deleteOrden)
+router.delete("/:id", validateOrdenId, OrdenController.deleteOrden)
 
 export default router;

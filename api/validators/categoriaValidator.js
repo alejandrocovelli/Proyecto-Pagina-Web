@@ -14,8 +14,6 @@ export const validateCreateCategoria = [
 ];
 
 export const validateUpdateCategoria = [
-    param('id')
-        .
     body('nombre')
         .optional()
         .isString().withMessage('El nombre debe ser un texto')
