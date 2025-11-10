@@ -3,9 +3,10 @@ import { Categoria } from "../models/Categoria.js";
 import { sequelize } from "../config/database.js";
 
 export class ProductoRepository {
-    async getProductos() {
+    async getProductos(categoriaId) {
         return await sequelize.transaction(async (transaction) => {
             const productos = await Producto.findAll({
+                where: { idCategoria: categoriaId },
                 attributes: [
                     "idProducto",
                     "nombre",

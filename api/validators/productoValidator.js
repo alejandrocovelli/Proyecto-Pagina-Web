@@ -1,5 +1,11 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
+
+export const validateGetProduct = [
+    body('idCategoria')
+        .optional()
+        .isInt().withMessage('El id de la categoria tiene que ser un int')
+]
 
 export const validateCreateProducto = [
     body('nombre')
@@ -15,11 +21,6 @@ export const validateCreateProducto = [
     body('precioMayorista')
         .exists().withMessage('El precio es requerido')
         .isInt({ min: 0 }).withMessage('El precio debe ser un número mayor o igual a 0'),
-    
-    body('foto')
-        .exists().withMessage('La imagen es requerida')
-        .isURL().withMessage('La imagen debe ser una URL válida')
-        .isLength({ min: 2, max: 255 }).withMessage('El nombre debe tener entre 2 y 255 caracteres'),
     
     body('idCategoria')
         .exists().withMessage('El ID de categoría es requerido')

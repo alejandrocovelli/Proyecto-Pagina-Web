@@ -5,8 +5,8 @@ export class ProductoService {
         this.productoRepository = new ProductoRepository()
     }
 
-    async getProductos() {
-        const productos = await this.productoRepository.getProductos();
+    async getProductos(categoriaId) {
+        const productos = await this.productoRepository.getProductos(categoriaId);
         return { success: true, data: productos };
     }
 

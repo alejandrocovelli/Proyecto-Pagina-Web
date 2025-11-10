@@ -5,7 +5,8 @@ const productoService = new ProductoService();
 export class ProductoController {
     static async getProductos(req, res) {
         try {
-            const result = await productoService.getProductos()
+            const { idCategoria } = req.body;
+            const result = await productoService.getProductos(idCategoria)
             if(!result) {
                 res.status(400).json({ error: "Error al listar productos", result})
             }
