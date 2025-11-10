@@ -7,7 +7,7 @@ export const validateCreateUsuario = [
         .exists().withMessage('El nombre es requerido')
         .not().isEmpty().withMessage('El nombre no puede estar vacío')
         .isString().withMessage('El nombre debe ser un texto')
-        .isLength({ min: 2, max: 45 }).withMessage('El nombre debe tener entre 2 y 45 caracteres'),
+        .isLength({ min: 1, max: 45 }).withMessage('El nombre debe tener entre 2 y 45 caracteres'),
     
     body('correo')
         .exists().withMessage('El correo es requerido')
