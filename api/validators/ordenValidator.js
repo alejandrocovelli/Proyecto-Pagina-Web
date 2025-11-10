@@ -1,14 +1,23 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
 
 export const validateCreateOrden = [
     body('estado')
         .exists().withMessage('El estado es requerido')
         .isInt({ min: 1, max: 4 }).withMessage('El estado debe ser 1 (pendiente), 2 (en proceso), 3 (cancelado) o 4 (aceptado)'),
+
+    body('productos')
+        .exists().withMessage('Los productos son requeridos')
+        .isArray().withMessage('Los productos deben ser un array')
+        .notEmpty().withMessage('Debe incluir al menos un producto'),
     
-    body('totalPago')
-        .exists().withMessage('El total es requerido')
-        .isInt({ min: 0 }).withMessage('El total debe ser un número mayor o igual a 0'),
+    body('productos.*.idProducto')
+        .exists().withMessage('El ID del producto es requerido')
+        .isInt({ min: 1 }).withMessage('El ID del producto debe ser un número entero positivo'),
+    
+    body('productos.*.cantidad')
+        .exists().withMessage('La cantidad es requerida')
+        .isInt({ min: 1 }).withMessage('La cantidad debe ser un número entero positivo'),
     
     body('idUsuario')
         .exists().withMessage('El ID de usuario es requerido')
