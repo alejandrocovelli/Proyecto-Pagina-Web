@@ -1,14 +1,13 @@
 import { Router } from "express"
 import { UsuarioController } from "../controllers/UsuarioController.js"
-import { validateCreateUsuario, validateUpdateUsuario } from "../validators/usuarioValidator.js";
-import { validateId } from "../validators/idValidator.js";
+import { validateCreateUsuario, validateUpdateUsuario, validateUsuarioId } from "../validators/usuarioValidator.js";
 
 const router = Router()
 
 router.get("/", UsuarioController.getUsuarios);
-router.get("/:id", validateId, UsuarioController.getUsuarioById);
+router.get("/:id", validateUsuarioId, UsuarioController.getUsuarioById);
 router.post("/", validateCreateUsuario, UsuarioController.createUsuario);
-router.put("/:id", [...validateId, ...validateUpdateUsuario], UsuarioController.updateUsuario);
-router.delete("/:id", validateId, UsuarioController.deleteUsuario);
+router.put("/:id", [...validateUsuarioId, ...validateUpdateUsuario], UsuarioController.updateUsuario);
+router.delete("/:id", validateUsuarioId, UsuarioController.deleteUsuario);
 
 export default router;
