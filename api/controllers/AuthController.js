@@ -12,4 +12,14 @@ export class AuthController {
             res.status(400).json({ error: error.message })
         }
     }
+
+    static async me(req, res) {
+        try {
+            const user = req.user;
+            if (!user) return res.status(401).json({ mensaje: "Usuario no autenticado" });
+            res.status(200).json({ mensaje: "Usuario autenticado", user })
+        } catch (error) {
+            return ApiResponse.error(res, error);
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Usuario } from "../models/Usuario";
+import { Usuario } from "../models/Usuario.js";
 
 export const AuthMiddleware = (req, res, next) => {
     try {
