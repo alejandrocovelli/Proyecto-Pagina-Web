@@ -5,10 +5,11 @@ import CategoriasRoutes from "./CategoriasRoutes.js"
 import DireccionesRoutes from "./DireccionesRoutes.js"
 import OrdenesRoutes from "./OrdenesRoutes.js"
 import OrdenesProductosRoutes from "./OrdenesProductosRoutes.js"
+import AuthRoutes from "./AuthRoutes.js"
 
 const router = Router()
 
-//router.use("/", AuthRoutes)
+router.use("/", AuthRoutes)
 router.use("/usuarios", UsuarioRoutes)
 router.use("/productos", ProductosRoutes)
 router.use("/categorias", CategoriasRoutes)
