@@ -1,6 +1,21 @@
+/**
+ * ========================================
+ * VALIDADORES: CATEGORIA
+ * ========================================
+ * Define reglas de validación para datos de categorías
+ * Valida nombre y ID de categoría
+ */
+
 import { body, check, param } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
 
+/**
+ * Validador para CREAR CATEGORIA
+ * Valida que el nombre sea válido
+ * 
+ * Campo requerido:
+ * - nombre: String, 2-45 caracteres
+ */
 export const validateCreateCategoria = [
     body('nombre')
         .exists().withMessage('El nombre es requerido')
@@ -13,6 +28,10 @@ export const validateCreateCategoria = [
     }
 ];
 
+/**
+ * Validador para ACTUALIZAR CATEGORIA
+ * Todos los campos son opcionales
+ */
 export const validateUpdateCategoria = [
     body('nombre')
         .optional()
@@ -24,6 +43,10 @@ export const validateUpdateCategoria = [
     }
 ];
 
+/**
+ * Validador para ID DE CATEGORIA
+ * Valida el parámetro idCategoria en rutas
+ */
 export const validateCategoriaId = [
     param('idCategoria')
         .exists().withMessage('El ID de categoría es requerido')

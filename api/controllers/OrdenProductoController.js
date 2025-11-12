@@ -1,8 +1,45 @@
+/**
+ * ========================================
+ * CONTROLLER: ORDEN PRODUCTO
+ * ========================================
+ * Capa de manejador HTTP para OrdenProducto
+ * Tabla junction que relaciona órdenes con productos
+ * 
+ * Responsabilidades:
+ * - Recibir solicitudes HTTP
+ * - Llamar servicios de negocio
+ * - Retornar respuestas HTTP
+ * 
+ * Códigos HTTP utilizados:
+ * - 200: OK (GET, UPDATE, DELETE exitoso)
+ * - 201: Created (POST exitoso)
+ * - 400: Bad Request (Datos inválidos)
+ * - 404: Not Found (Registro no existe)
+ * - 500: Internal Server Error (Error del servidor)
+ * 
+ * Nota: Normalmente los registros se crean automáticamente
+ * Estos endpoints son principalmente para consultas y correcciones
+ */
+
 import { OrdenProductoService } from "../services/OrdenProductoService.js";
 
+// Instancia del servicio
 const ordenProductoService = new OrdenProductoService();
 
 export class OrdenProductoController {
+    /**
+     * Obtener todos los registros OrdenProducto
+     * 
+     * GET /api/ordenesProductos
+     * 
+     * @param {Request} req - Objeto de solicitud HTTP
+     * @param {Response} res - Objeto de respuesta HTTP
+     * 
+     * Respuestas:
+     * - 200: Array de todos los registros OrdenProducto
+     * - 400: Error al listar
+     * - 500: Error interno del servidor
+     */
     static async getOrdenesProductos(req, res) {
         try {
             const result = await ordenProductoService.getOrdenesProductos()
@@ -18,6 +55,22 @@ export class OrdenProductoController {
         }
     }
 
+    /**
+     * Obtener registro OrdenProducto por ID
+     * 
+     * GET /api/ordenesProductos/:id
+     * 
+     * @param {Request} req - Objeto de solicitud HTTP con params.id
+     * @param {Response} res - Objeto de respuesta HTTP
+     * 
+     * Parámetros:
+     * - id: ID de OrdenProducto (del URL)
+     * 
+     * Respuestas:
+     * - 200: Registro OrdenProducto encontrado
+     * - 404: Registro no encontrado
+     * - 500: Error interno del servidor
+     */
     static async getOrdenProductoById(req, res) {
         try {
             const { id } = req.params;
@@ -34,6 +87,30 @@ export class OrdenProductoController {
         }
     }
 
+    /**
+     * Crear nuevo registro OrdenProducto
+     * 
+     * POST /api/ordenesProductos
+     * Body requerido:
+     * {
+     *   "idOrden": number,
+     *   "idProducto": number,
+     *   "cantidad": number,
+     *   "precioUnidad": number,
+     *   "valorTotal": number
+     * }
+     * 
+     * NOTA: Normalmente no se llama directamente
+     * Se crea automáticamente al crear una orden
+     * 
+     * @param {Request} req - Objeto de solicitud HTTP con body
+     * @param {Response} res - Objeto de respuesta HTTP
+     * 
+     * Respuestas:
+     * - 201: Registro creado correctamente
+     * - 400: Error al crear el registro
+     * - 500: Error interno del servidor
+     */
     static async createOrdenProducto(req, res) {
         try {
             const result = await ordenProductoService.createOrdenProducto(req.body)
@@ -49,6 +126,28 @@ export class OrdenProductoController {
         }
     }
 
+    /**
+     * Actualizar registro OrdenProducto
+     * 
+     * PUT /api/ordenesProductos/:id
+     * Body (todos opcionales):
+     * {
+     *   "cantidad": number,
+     *   "precioUnidad": number,
+     *   "valorTotal": number
+     * }
+     * 
+     * @param {Request} req - Objeto de solicitud HTTP con params.id y body
+     * @param {Response} res - Objeto de respuesta HTTP
+     * 
+     * Parámetros:
+     * - id: ID de OrdenProducto (del URL)
+     * 
+     * Respuestas:
+     * - 200: Registro actualizado correctamente
+     * - 404: Registro no encontrado
+     * - 500: Error interno del servidor
+     */
     static async updateOrdenProducto(req, res) {
         try {
             const { id } = req.params;
@@ -65,6 +164,22 @@ export class OrdenProductoController {
         }
     }
 
+    /**
+     * Eliminar registro OrdenProducto
+     * 
+     * DELETE /api/ordenesProductos/:id
+     * 
+     * @param {Request} req - Objeto de solicitud HTTP con params.id
+     * @param {Response} res - Objeto de respuesta HTTP
+     * 
+     * Parámetros:
+     * - id: ID de OrdenProducto (del URL)
+     * 
+     * Respuestas:
+     * - 200: Registro eliminado correctamente
+     * - 404: Registro no encontrado
+     * - 500: Error interno del servidor
+     */
     static async deleteOrdenProducto(req, res) {
         try {
             const { id } = req.params;
