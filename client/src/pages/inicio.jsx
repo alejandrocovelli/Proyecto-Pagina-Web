@@ -2,7 +2,7 @@
 import Header from "../components/header"
 import ProductCard from "../components/ProductoCard"
 
-export default function PaginaInicio() {
+export default function Inicio() {
 
     const bestSellers = [
         {
@@ -36,11 +36,11 @@ export default function PaginaInicio() {
     ]
 
     return (
-        <div className="w-full h-[65rem] h-">
+        <div className="w-full h-screen">
             <Header currentPage="Inicio" />
 
             {/* Hero Banner */}
-            <div className="relative w-full h-1/2 bg-gray-900 overflow-hidden">
+            <div className="relative w-full h-2/4 bg-gray-900 overflow-hidden">
                 <img src="../../Banner.jpg" alt="Paper Universe" className="w-full h-full object-cover opacity-70" />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
                     <h1 className="text-white text-8xl font-bold mb-8">Paper Universe</h1>
@@ -57,8 +57,8 @@ export default function PaginaInicio() {
                     <div className="flex justify-center items-center py-4 mb-4 bg-customPurple1">
                         <h2 className="text-3xl font-bold text-white text-center">💖 Lo Mas Vendido</h2>
                     </div>
-                    <div className="max-w-[100rem] mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-24">
+                    <div className="max-w-[100rem] mx-32">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
                             {bestSellers.map((product) => (
                                 <ProductCard
                                     key={product.id}

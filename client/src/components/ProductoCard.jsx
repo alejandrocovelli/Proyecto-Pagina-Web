@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 export default function ProductCard({ image, title, price, originalPrice, rating = 5, onAddToCart, onFavorite}) {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-            <div className="relative h-60 bg-gray-100">
+            <div className="relative h-40 bg-gray-100">
                 <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
                 <button onClick={onFavorite} className="absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
                     <Heart size={20} className="text-purple-500" />

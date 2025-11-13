@@ -11,19 +11,19 @@ export default function Header(currentPage) {
                 </Link>
                 <nav className="flex items-center gap-8">
                     <Link to="/" className="flex flex-col items-center hover:opacity-80 transition">
-                        <House size={35}/>
+                        <House size={25}/>
                         <span className="text-lg font-medium">Inicio</span>
                     </Link>
                     <Link to="/catalogo" className="flex flex-col items-center hover:opacity-80 transition">
-                        <Handbag size={35}/>
+                        <Handbag size={25}/>
                         <span className="text-lg font-medium">Catalogo</span>
                     </Link>
                     <Link to="/" className="flex flex-col items-center hover:opacity-80 transition">
-                        <Gem size={35}/>
+                        <Gem size={25}/>
                         <span className="text-lg font-medium">Servicios</span>
                     </Link>
                     <Link to="/user" className="flex flex-col items-center hover:opacity-80 transition">
-                        <User size={35}/>
+                        <User size={25}/>
                         <span className="text-lg font-medium">Acceder</span>
                     </Link>
                 </nav>

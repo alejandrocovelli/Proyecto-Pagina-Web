@@ -1,7 +1,7 @@
 import CategoriaCard from "../components/CategoriaCard";
 import Header from "../components/header";
 
-export default function PaginaCatalogo() {
+export default function Catalogo() {
 
     const categorias = [
         {
@@ -27,11 +27,11 @@ export default function PaginaCatalogo() {
     ]
 
     return (
-        <div className="w-full">
+        <div className="w-full h-screen">
             <Header currentPage="Catalogo" />
 
             {/* Hero Banner */}
-            <div className="relative w-full h-80 bg-gray-900 overflow-hidden">
+            <div className="relative w-full h-2/5 bg-gray-900 overflow-hidden">
                 <img src="../../Banner.jpg" alt="Catalogo" className="w-full h-full object-cover opacity-70" />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end pb-10">
                     <h1 className="text-white text-5xl font-bold ml-8">Catálogo</h1>
