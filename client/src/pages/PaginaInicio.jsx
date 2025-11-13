@@ -1,6 +1,6 @@
 
 import Header from "../components/header"
-import ProductCard from "../components/ProductCard"
+import ProductCard from "../components/ProductoCard"
 
 export default function PaginaInicio() {
 

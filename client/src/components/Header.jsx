@@ -14,7 +14,7 @@ export default function Header(currentPage) {
                         <House size={35}/>
                         <span className="text-lg font-medium">Inicio</span>
                     </Link>
-                    <Link to="/catalog" className="flex flex-col items-center hover:opacity-80 transition">
+                    <Link to="/catalogo" className="flex flex-col items-center hover:opacity-80 transition">
                         <Handbag size={35}/>
                         <span className="text-lg font-medium">Catalogo</span>
                     </Link>
