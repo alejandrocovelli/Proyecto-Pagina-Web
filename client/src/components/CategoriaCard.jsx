@@ -1,8 +1,10 @@
-"use client"
+import { useNavigate } from "react-router-dom"
 
-export default function CategoriaCard({ image, title, onClick }) {
+export default function CategoriaCard({ image, title, idCategoria }) {
+    const navigate = useNavigate()
+    
     return (
-        <button onClick={onClick} className="flex rounded-lg overflow-hidden p-5 h-52 group cursor-pointer bg-customGray3">
+        <button onClick={() => navigate(`/categoria/${idCategoria}`)} className="flex rounded-lg overflow-hidden p-5 h-52 group cursor-pointer bg-customGray3">
             <div className="h-full w-1/2 rounded-lg overflow-hidden">
                 <img
                     src={image || "/placeholder.svg"}

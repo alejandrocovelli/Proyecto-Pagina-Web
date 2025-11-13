@@ -44,7 +44,7 @@ export default function Catalogo() {
                     <div className="max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-40">
                             {categorias.map((categoria) => (
-                                <CategoriaCard key={categoria.id} image={categoria.image} title={categoria.title} />
+                                <CategoriaCard key={categoria.id} image={categoria.image} title={categoria.title} idCategoria={categoria.id} />
                             ))}
                         </div>
                     </div>
