@@ -22,7 +22,7 @@ export default function Header(currentPage) {
                         <Gem size={25}/>
                         <span className="text-lg font-medium">Servicios</span>
                     </Link>
-                    <Link to="/user" className="flex flex-col items-center hover:opacity-80 transition">
+                    <Link to="/usuario" className="flex flex-col items-center hover:opacity-80 transition">
                         <User size={25}/>
                         <span className="text-lg font-medium">Acceder</span>
                     </Link>

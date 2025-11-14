@@ -1,6 +1,7 @@
 
 import Header from "../components/header"
-import ProductCard from "../components/ProductoCard"
+import ProductoCard from "../components/ProductoCard"
+import Producto from "./producto"
 
 export default function Inicio() {
 
@@ -59,14 +60,15 @@ export default function Inicio() {
                     </div>
                     <div className="max-w-[100rem] mx-32">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
-                            {bestSellers.map((product) => (
-                                <ProductCard
-                                    key={product.id}
-                                    image={product.image}
-                                    title={product.title}
-                                    price={product.price}
-                                    originalPrice={product.originalPrice}
+                            {bestSellers.map((producto) => (
+                                <ProductoCard
+                                    key={producto.id}
+                                    image={producto.image}
+                                    title={producto.title}
+                                    price={producto.price}
+                                    originalPrice={producto.originalPrice}
                                     rating={5}
+                                    idProducto={producto.id}
                                 />
                             ))}
                         </div>

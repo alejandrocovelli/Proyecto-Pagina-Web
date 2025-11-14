@@ -35,7 +35,7 @@ export default function Categorias() {
         },
     ]
 
-    const products = [
+    const productos = [
         {
             id: 1,
             title: "Lapicero Panda tinta negra",
@@ -107,14 +107,15 @@ export default function Categorias() {
 
                             {/* Products Grid */}
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-24">
-                                {products.map((product) => (
+                                {productos.map((producto) => (
                                     <ProductoCard
-                                        key={product.id}
-                                        image={product.image}
-                                        title={product.title}
-                                        price={product.price}
-                                        originalPrice={product.originalPrice}
-                                        rating={product.rating}
+                                        key={producto.id}
+                                        idProducto={producto.id}
+                                        image={producto.image}
+                                        title={producto.title}
+                                        price={producto.price}
+                                        originalPrice={producto.originalPrice}
+                                        rating={producto.rating}
                                     />
                                 ))}
                             </div>
