@@ -128,10 +128,7 @@ export class UsuarioController {
             }
             
             // Respuesta exitosa con código 201 (Created)
-            return res.status(201).json({
-                mensaje: "Usuario creado correctamente",
-                data: result.data
-            });
+            return res.status(201).json(result);
         } catch (error) {
             console.error("Error en createUsuario:", error);
             

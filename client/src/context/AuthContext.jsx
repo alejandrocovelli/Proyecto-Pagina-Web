@@ -1,14 +1,19 @@
 import { createContext, useState, useEffect } from "react";
-import { login, getMe } from "../services/auth.js";
+import { login, getMe, register } from "../services/auth.js";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
+    const registerHandler = async (nombre, correo, contraseña, tipo) => {
+        const res = await register(nombre, correo, contraseña, tipo);
+        localStorage.setItem("token", res.token);
+        setUser(res.data);
+    }
+
     const loginHandler = async (correo, contraseña) => {
         const res = await login(correo, contraseña);
-        console.log(res);
         localStorage.setItem("token", res.token);
         setUser(res.user);
     };
@@ -32,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loginHandler, logoutHandler }}>
+        <AuthContext.Provider value={{ user, loginHandler, registerHandler, logoutHandler }}>
             {children}
         </AuthContext.Provider>
     );

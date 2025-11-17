@@ -15,8 +15,8 @@
  * Patrón: Service/Business Logic Layer
  * La lógica de negocio está centralizada y separada del acceso a datos
  */
-
 import { UsuarioRepository } from "../repositories/UsuarioRepository.js";
+import jwt from "jsonwebtoken";
 
 export class UsuarioService {
     /**
@@ -84,8 +84,17 @@ export class UsuarioService {
             // - Validación de correo único
             // - Hash de contraseña
             const usuario = await this.usuarioRepository.createUsuario(usuarioData);
-            
-            return { success: true, data: usuario };
+            console.log(usuario.dataValues);
+            const token = jwt.sign(
+                { 
+                    idUsuario: usuario.dataValues.idUsuario,  // ID del usuario
+                    tipo: usuario.dataValues.tipo              // Tipo/rol del usuario
+                },
+                process.env.JWT_SECRET,          // Clave secreta para firmar
+                { expiresIn: "1h" }              // Token válido por 1 hora
+            );
+            console.log(token);
+            return { success: true, token, data: usuario };
         } catch (error) {
             throw new Error(`Error al crear usuario: ${error.message}`);
         }

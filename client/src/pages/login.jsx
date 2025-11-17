@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth.js"
 
 export default function Login() {
-    const { loginHandler } = useAuth();
+    const { loginHandler, registerHandler } = useAuth();
     const [activeTab, setActiveTab] = useState("Inicio de Sesion")
     const navigate = useNavigate();
     // Campos comunes
@@ -14,6 +14,7 @@ export default function Login() {
 
     // Campo solo para registro
     const [nombre, setNombre] = useState("")
+    const [tipo, setTipo] = useState("")
 
     const handleSubmit = async (e) => {
 		try {
@@ -25,7 +26,9 @@ export default function Login() {
                 // redirigir a la página de inicio
                 navigate("/");
             } else {
-                // Aqui va el register
+                console.log(nombre, correo, contraseña, tipo);
+                await registerHandler(nombre, correo, contraseña, tipo);
+                navigate("/");
             }
 		} catch (error) {
 			console.error("Error al iniciar sesión. Por favor, verifica tus credenciales.");
@@ -86,6 +89,24 @@ export default function Login() {
                                 placeholder="••••••••"
                             />
                         </div>
+
+                        {!isLogin && (
+                            <div>
+                                <label className="text-white text-sm block mb-2">Tipo de usuario</label>
+
+                                <select
+                                    name="tipo"
+                                    value={tipo}
+                                    onChange={(e) => setTipo(e.target.value)}
+                                    className="w-full px-4 py-2 rounded-full bg-white text-gray-800 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
+                                >
+                                    <option value="">Seleccione un tipo...</option>
+                                    <option value={1}>Administrador</option>
+                                    <option value={2}>Cliente normal</option>
+                                    <option value={3}>Cliente mayorista</option>
+                                </select>
+                            </div>
+                        )}
 
                         {/* En login mostramos link olvido contraseña; en registro una nota */}
                         {isLogin ? (
