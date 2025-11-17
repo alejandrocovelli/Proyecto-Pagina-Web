@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const registerHandler = async (nombre, correo, contraseña, tipo) => {
         const res = await register(nombre, correo, contraseña, tipo);
@@ -25,10 +26,13 @@ export const AuthProvider = ({ children }) => {
 
     const loadUser = async () => {
         try {
+            setLoading(true)
             const res = await getMe();
             setUser(res.user);
         } catch {
             setUser(null);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loginHandler, registerHandler, logoutHandler }}>
+        <AuthContext.Provider value={{ user, loginHandler, registerHandler, logoutHandler, loading }}>
             {children}
         </AuthContext.Provider>
     );

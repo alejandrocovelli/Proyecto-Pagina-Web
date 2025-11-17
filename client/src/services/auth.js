@@ -18,5 +18,11 @@ export const register = async(nombre, correo, contraseña, tipo) => {
     }
 }
 
-export const getMe = () =>
-    axiosClient.get("/me");
+export const getMe = async() => {
+    try {
+        const res = await axiosClient.get("/me");
+        return res.data;
+    } catch (e) {
+        throw new Error("Error al obtener usuario logueado");
+    }
+}

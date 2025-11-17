@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function ProductoCard({ idProducto, image, title, price, originalPrice, rating = 5, onAddToCart, onFavorite}) {
     const navigate = useNavigate();
-    console.log(idProducto);
     return (
         <div onClick={() => navigate(`/product/${idProducto}`)} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
             <div className="relative h-40 bg-gray-100">

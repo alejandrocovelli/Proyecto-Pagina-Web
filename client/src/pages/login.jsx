@@ -26,7 +26,6 @@ export default function Login() {
                 // redirigir a la página de inicio
                 navigate("/");
             } else {
-                console.log(nombre, correo, contraseña, tipo);
                 await registerHandler(nombre, correo, contraseña, tipo);
                 navigate("/");
             }
