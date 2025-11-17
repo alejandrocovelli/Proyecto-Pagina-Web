@@ -1,28 +1,36 @@
 import { useState } from "react"
 import Header from "../components/header"
 import TabNavegacion from "../components/TabNavegacion"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../hooks/useAuth.js"
 
 export default function Login() {
+    const { loginHandler } = useAuth();
     const [activeTab, setActiveTab] = useState("Inicio de Sesion")
-
+    const navigate = useNavigate();
     // Campos comunes
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [correo, setCorreo] = useState("")
+    const [contraseña, setContraseña] = useState("")
 
     // Campo solo para registro
     const [nombre, setNombre] = useState("")
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        if (activeTab === "Inicio de Sesion") {
-            // Aquí iría la llamada al servicio de login
-            console.log("Login:", { email, password })
-        } else {
-            // Registro
-            console.log("Register:", { nombre, email, password })
-        }
-    }
+    const handleSubmit = async (e) => {
+		try {
+            e.preventDefault();
+            if (activeTab === "Inicio de Sesion") {
+                console.log(correo, contraseña);
+                await loginHandler(correo, contraseña);
+                // El AuthContext se encargará de obtener la información del usuario
+                // redirigir a la página de inicio
+                navigate("/");
+            } else {
+                // Aqui va el register
+            }
+		} catch (error) {
+			console.error("Error al iniciar sesión. Por favor, verifica tus credenciales.");
+		}
+	};
 
     const isLogin = activeTab === "Inicio de Sesion"
 
@@ -60,11 +68,11 @@ export default function Login() {
                         <div>
                             <label className="text-white text-sm block mb-2">Correo electronico</label>
                             <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="correo"
+                                value={correo}
+                                onChange={(e) => setCorreo(e.target.value)}
                                 className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
-                                placeholder="tu@email.com"
+                                placeholder="tu@gmail.com"
                             />
                         </div>
 
@@ -72,8 +80,8 @@ export default function Login() {
                             <label className="text-white text-sm block mb-2">Contraseña</label>
                             <input
                                 type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={contraseña}
+                                onChange={(e) => setContraseña(e.target.value)}
                                 className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
                                 placeholder="••••••••"
                             />

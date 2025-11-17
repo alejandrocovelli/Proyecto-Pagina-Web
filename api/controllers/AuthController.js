@@ -47,10 +47,9 @@ export class AuthController {
         try {
             // Extraer credenciales del body
             const { correo, contraseña } = req.body;
-            
             // Llamar al servicio para autenticar
             const result = await authService.login(correo, contraseña);
-            
+            console.log(result);
             // Retornar respuesta con token
             res.status(200).json(result);
         } catch(error) {

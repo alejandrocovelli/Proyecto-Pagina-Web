@@ -1,9 +1,11 @@
 import Header from "../components/header"
 import UsuarioCard from "../components/UsuarioCard"
 import { User, Gem, CreditCard, DoorClosed, Search, MapPin } from "lucide-react"
+import { useAuth } from "../hooks/useAuth";
 
 
 export default function Usuario() {
+    const { logoutHandler } = useAuth();
     const actions = [
         { icon: User, label: "Informacion Personal" },
         { icon: MapPin, label: "Direcciones" },
@@ -28,6 +30,7 @@ export default function Usuario() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
                             {actions.map((action, i) => (
                                 <button
+                                onClick={() => logoutHandler()}
                                 key={i}
                                     className="bg-white rounded-lg p-6 flex flex-col items-center justify-center gap-4 shadow-md hover:shadow-lg transition hover:scale-105 cursor-pointer"
                                 >

@@ -1,7 +1,6 @@
 
 import Header from "../components/header"
 import ProductoCard from "../components/ProductoCard"
-import Producto from "./producto"
 
 export default function Inicio() {
 

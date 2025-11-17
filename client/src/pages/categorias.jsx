@@ -1,12 +1,12 @@
 "use client"
 
-import { useParams } from "react-router-dom"
+//import { useParams } from "react-router-dom"
 import Header from "../components/header"
 import BarraLateral from "../components/BarraLateral"
 import ProductoCard from "../components/ProductoCard"
 
 export default function Categorias() {
-    const { idCategoria } = useParams()
+    //const { idCategoria } = useParams()
 
     const sidebarSections = [
         {
