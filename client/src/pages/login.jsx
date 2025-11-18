@@ -109,10 +109,7 @@ export default function Login() {
 
                         {/* En login mostramos link olvido contraseña; en registro una nota */}
                         {isLogin ? (
-                            <div className="flex justify-between items-center">
-                                <a href="#" className="text-white text-sm underline">Olvidé la contraseña</a>
-                                <span></span>
-                            </div>
+                            <div></div>
                         ) : (
                             <p className="text-white text-sm">Al registrarte aceptas nuestros términos y condiciones.</p>
                         )}

@@ -56,7 +56,7 @@ router.get("/:idProducto", validateProductoId, ProductoController.getProductoByI
  * 
  * Nota: upload.single("imagen") parsea el archivo con clave "imagen"
  */
-router.post("/", upload.single("imagen"), validateCreateProducto, ProductoController.createProducto)
+router.post("/", upload.single("foto"), validateCreateProducto, ProductoController.createProducto)
 
 /**
  * PUT /api/productos/:id

@@ -53,28 +53,39 @@ export class ProductoService {
      */
     async createProducto(productoData, file) {
         let imagenUrl = null;
-        
-        // Si se envió una imagen, subirla a Cloudinary
-        if(file) {
-            // Subir archivo a Cloudinary en la carpeta "productos"
-            const upload = await cloudinary.uploader.upload(file.path, {
-                folder: "productos",
-            });
-            
-            // Obtener URL segura de la imagen
-            imagenUrl = upload.secure_url;
-            
-            // Eliminar archivo temporal del servidor
-            fs.unlinkSync(file.path);
+
+        if (file) {
+            try {
+                console.log("ProductoService: subiendo a Cloudinary ->", file.path);
+                const upload = await cloudinary.uploader.upload(file.path, {
+                    folder: "productos",
+                    resource_type: "image"
+                });
+                imagenUrl = upload?.secure_url ?? null;
+                console.log("ProductoService: subida OK ->", imagenUrl);
+            } catch (err) {
+                console.error("ProductoService: error subiendo a Cloudinary:", err && err.message ? err.message : err);
+                // intentar limpiar temporal si existe
+                try {
+                    if (file && fs.existsSync(file.path)) fs.unlinkSync(file.path);
+                } catch (e) {
+                    console.warn("ProductoService: no se pudo eliminar temporal tras fallo:", e && e.message ? e.message : e);
+                }
+                throw err; // permite al controller devolver 500 con details
+            }
+
+            // eliminar archivo temporal si existe
+            try {
+                if (file && fs.existsSync(file.path)) {
+                    fs.unlinkSync(file.path);
+                    console.log("ProductoService: archivo temporal eliminado:", file.path);
+                }
+            } catch (e) {
+                console.warn("ProductoService: fallo al eliminar temporal:", e && e.message ? e.message : e);
+            }
         }
 
-        // Combinar datos del producto con la URL de la imagen
-        const productoFinal = {
-            ...productoData,
-            foto: imagenUrl
-        };
-        
-        // Guardar producto en BD
+        const productoFinal = { ...productoData, foto: imagenUrl };
         const producto = await this.productoRepository.createProducto(productoFinal);
         return { success: true, data: producto };
     }

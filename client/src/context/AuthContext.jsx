@@ -37,7 +37,13 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (localStorage.getItem("token")) loadUser();
+        // Si hay token, intentamos cargar el usuario; si no, terminar comprobación
+        if (localStorage.getItem("token")) {
+            loadUser();
+        } else {
+            // No hay token: ya terminamos la comprobación inicial
+            setLoading(false);
+        }
     }, []);
 
     return (
