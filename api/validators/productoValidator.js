@@ -6,7 +6,7 @@
  * Valida nombre, precio, categoría e imagen
  */
 
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
 
 /**
@@ -14,9 +14,13 @@ import { validateResult } from "./validatorUtils.js";
  * Valida que idCategoria sea válido (opcional)
  */
 export const validateGetProduct = [
-    body('idCategoria')
+    query('idCategoria')
         .optional()
-        .isInt().withMessage('El id de la categoría tiene que ser un número entero')
+        .isInt().withMessage('El id de la categoría tiene que ser un número entero'),
+
+    query('limit')
+        .optional()
+        .isInt().withMessage('El limite tiene que ser un número entero')
 ]
 
 /**

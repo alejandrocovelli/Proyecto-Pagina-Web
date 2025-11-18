@@ -1,12 +1,12 @@
 import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductoCard({ idProducto, image, title, price, originalPrice, rating = 5, onAddToCart, onFavorite}) {
+export default function ProductoCard({ idProducto, image, title, price, originalPrice, onAddToCart, onFavorite}) {
     const navigate = useNavigate();
     return (
         <div onClick={() => navigate(`/product/${idProducto}`)} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
             <div className="relative h-40 bg-gray-100">
-                <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
+                <img src={image || "../public/default-ui-image-placeholder.webp"} alt={title} className="w-full h-full object-cover" />
                 <button onClick={onFavorite} className="absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
                     <Heart size={20} className="text-customPurple1" />
                 </button>
@@ -20,11 +20,6 @@ export default function ProductoCard({ idProducto, image, title, price, original
                     )}
                 </div>
                 <div className="flex items-center justify-between">
-                    <div className="flex gap-1">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                            <span key={i} className={i < rating ? "text-yellow-400" : "text-gray-300"}>★</span>
-                        ))}
-                    </div>
                     <button onClick={onAddToCart} className="bg-customPurple1 text-white px-3 py-1 rounded text-sm hover:bg-purple-600 transition" >+</button>
                 </div>
             </div>

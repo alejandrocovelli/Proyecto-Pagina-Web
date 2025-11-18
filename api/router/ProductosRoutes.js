@@ -40,7 +40,7 @@ router.get("/", validateGetProduct, ProductoController.getProductos)
  * 
  * Parámetros: id (número entero positivo)
  */
-router.get("/:id", validateProductoId, ProductoController.getProductoById)
+router.get("/:idProducto", validateProductoId, ProductoController.getProductoById)
 
 /**
  * POST /api/productos

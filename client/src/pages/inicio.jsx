@@ -1,10 +1,32 @@
 
+import { useEffect, useState } from "react";
 import Header from "../components/header"
 import ProductoCard from "../components/ProductoCard"
+import { getProductosService } from "../services/ProductoService";
 
 export default function Inicio() {
+    const [productos, setProductos] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const bestSellers = [
+    const getProductos = async () => {
+		setLoading(true);
+		try {
+            const filtros = {};
+            filtros.limit = 4;
+			const response = await getProductosService(filtros);
+			setProductos(response.data);
+		} catch (error) {
+			console.error("Error al cargar productos:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+    useEffect(() => {
+        getProductos();
+    }, [])
+
+    /*const bestSellers = [
         {
             id: 1,
             title: "CAJA LAPICERO X12 CAPYBARA",
@@ -33,7 +55,7 @@ export default function Inicio() {
             originalPrice: 30000,
             image: "../../public/Hello kitty.jpg",
         },
-    ]
+    ]*/
 
     return (
         <div className="w-full h-screen">
@@ -59,17 +81,20 @@ export default function Inicio() {
                     </div>
                     <div className="max-w-[100rem] mx-32">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
-                            {bestSellers.map((producto) => (
-                                <ProductoCard
-                                    key={producto.id}
-                                    image={producto.image}
-                                    title={producto.title}
-                                    price={producto.price}
-                                    originalPrice={producto.originalPrice}
-                                    rating={5}
-                                    idProducto={producto.id}
-                                />
-                            ))}
+                            {loading ? (
+                                <p>Cargando productos...</p>
+                            ) : 
+                                productos.map((producto) => (
+                                    <ProductoCard
+                                        key={producto.idProducto}
+                                        image={producto.foto}
+                                        title={producto.nombre}
+                                        price={producto.precio}
+                                        originalPrice={producto.precioMayorista}
+                                        idProducto={producto.idProducto}
+                                    />
+                                ))
+                            }
                         </div>
                     </div>
                 </div>

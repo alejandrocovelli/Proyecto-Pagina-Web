@@ -27,8 +27,8 @@ export class ProductoService {
      * @param {Number} categoriaId - ID de la categoría
      * @returns {Promise<Object>} Respuesta con lista de productos
      */
-    async getProductos(categoriaId) {
-        const productos = await this.productoRepository.getProductos(categoriaId);
+    async getProductos(categoriaId, limit) {
+        const productos = await this.productoRepository.getProductos(categoriaId, limit);
         return { success: true, data: productos };
     }
 

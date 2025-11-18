@@ -1,11 +1,16 @@
 export default function BarraLateral({ sections }) {
-    return (
-        <aside className="w-80 bg-white p-6 border-r border-gray-200">
-            <h1 className="text-customPurple1 text-xl font-bold uppercase mb-3">Categoria/Productos</h1>
-            {sections.map((section, idx) => (
-                <div key={idx} className="mb-8">
-                    <h3 className="text-customPurple1 font-bold text-sm mb-3 uppercase">{section.title}</h3>
-                    <ul className="space-y-2">
+  return (
+    <aside className="w-80 bg-white p-6 border-r border-gray-200 h-screen overflow-y-auto">
+      <h1 className="text-customPurple1 text-xl font-bold uppercase mb-4">
+        Categoría/Productos
+      </h1>
+      <div className="space-y-1">
+        {sections.map((section, idx) => (
+          <div key={idx} className="mb-8">
+            <h3 className=" w-full px-4 py-3 rounded-lg transition font-medium uppercase">
+              {section.nombre}
+            </h3>
+            {/* <ul className="space-y-2">
                         {section.items.map((item, itemIdx) => (
                             <li key={itemIdx}>
                                 <button
@@ -16,9 +21,10 @@ export default function BarraLateral({ sections }) {
                                 </button>
                             </li>
                         ))}
-                    </ul>
-                </div>
-            ))}
-        </aside>
-    )
+                    </ul> */}
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
 }

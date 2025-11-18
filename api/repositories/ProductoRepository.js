@@ -25,11 +25,17 @@ export class ProductoRepository {
      * @returns {Promise<Array>} Array de productos de la categoría
      * @throws {Error} Si no se encuentran productos
      */
-    async getProductos(categoriaId) {
+    async getProductos(categoriaId, limitProducts) {
         return await sequelize.transaction(async (transaction) => {
+            let where = {}
+            if(categoriaId){
+                where.idCategoria = categoriaId;
+            }
+            const limit = limitProducts ? Number(limitProducts) : undefined;
+            console.log(limit, where);
             // Buscar productos filtrados por categoría
             const productos = await Producto.findAll({
-                where: { idCategoria: categoriaId },
+                where,
                 attributes: [
                     "idProducto",
                     "nombre",
@@ -38,6 +44,7 @@ export class ProductoRepository {
                     "foto"
                     // No incluir información sensible de la BD
                 ],
+                limit,
                 // Incluir datos de la categoría relacionada
                 include: [
                     {
@@ -48,6 +55,7 @@ export class ProductoRepository {
                 ],
                 transaction
             })
+            console.log("Estos son los productos", productos);
             if(!productos) throw new Error("Productos no encontrados")
 
             return productos;
