@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import CategoriaCard from "../components/CategoriaCard";
 import Header from "../components/header";
+import { getCategoriasService } from "../services/ProductoService";
 
 export default function Catalogo() {
+    const [categorias, setCategorias] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const categorias = [
+    const getCategorias = async () => {
+        setLoading(true);
+        try {
+            const response = await getCategoriasService();
+            setCategorias(response.data);
+        } catch (error) {
+            console.error("Error al cargar categorias:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getCategorias();
+    }, [])
+
+    /*const categorias = [
         {
             id: 1,
             title: "Lapicero con 10 minas de colores",
@@ -24,7 +44,7 @@ export default function Catalogo() {
             title: "Lapicero apliques Kuromi",
             image: "../../public/Hello kitty.jpg",
         },
-    ]
+    ]*/
 
     return (
         <div className="w-full h-screen">
@@ -43,9 +63,13 @@ export default function Catalogo() {
                 <div className="relative">
                     <div className="max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-40">
-                            {categorias.map((categoria) => (
-                                <CategoriaCard key={categoria.id} image={categoria.image} title={categoria.title} idCategoria={categoria.id} />
-                            ))}
+                            {loading ? (
+                                <p>Cargando categorias...</p>
+                            ) :
+                                categorias.map((categoria) => (
+                                    <CategoriaCard key={categoria.idCategoria} image={categoria.foto} nombre={categoria.nombre} idCategoria={categoria.idCategoria} />
+                                ))
+                            }
                         </div>
                     </div>
                 </div>

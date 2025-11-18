@@ -4,19 +4,12 @@ import Header from "../components/header";
 import { Heart, Truck } from "lucide-react";
 import { getProductoById } from "../services/ProductoService";
 
-interface Producto {
-  idProducto: number;
-  nombre: string;
-  precio: number;
-  precioMayorista: number;
-  foto: string;
-}
 
 export default function Producto() {
   const { idProducto  } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [product, setProduct] = useState<Producto | null>(null);
+  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -60,7 +53,7 @@ export default function Producto() {
         <div className="max-w-7xl h-full mx-auto flex flex-col min-h-0">
           {/* Breadcrumb */}
           <div className="text-gray-600 font-medium mb-8 bg-white p-4 rounded-lg">
-            Categoría/Producto/{product.nombre}
+            {product?.categoria?.nombre}/{product?.nombre}
           </div>
 
           {/* Product Detail: left photo and right info (title, envio box, price/controls) */}
@@ -70,8 +63,8 @@ export default function Producto() {
             <div className="md:col-span-2 row-span-2">
               <div className="bg-white rounded-lg p-6 flex items-center justify-center h-full">
                 <img
-                  src={product.foto || "../public/default-ui-image-placeholder.webp"}
-                  alt={product.nombre}
+                  src={product?.foto || "../public/default-ui-image-placeholder.webp"}
+                  alt={product?.nombre}
                   className="rounded-lg shadow-sm max-h-80 md:max-h-96 max-w-full object-contain"
                 />
               </div>
@@ -82,7 +75,7 @@ export default function Producto() {
               {/* Title */}
               <div className="pb-4 px-6 border-b-8 border-gray-100">
                 <h1 className="text-3xl font-bold text-customPurple1">
-                  {product.nombre}
+                  {product?.nombre}
                 </h1>
               </div>
 
@@ -101,10 +94,10 @@ export default function Producto() {
                   <div className="flex items-center gap-4 mb-4">
                     <div className="text-center">
                       <span className="text-4xl font-bold text-customPurple1">
-                        ${product.precioMayorista.toLocaleString()}
+                        ${product?.precioMayorista.toLocaleString()}
                       </span>
                       <div className="text-sm text-gray-400 line-through">
-                        ${product.precio.toLocaleString()}
+                        ${product?.precio.toLocaleString()}
                       </div>
                     </div>
 
