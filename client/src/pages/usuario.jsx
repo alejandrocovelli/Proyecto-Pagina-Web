@@ -7,7 +7,6 @@ import fondo from "../../public/Group 69.png"
 
 export default function Usuario() {
     const { user, logoutHandler } = useAuth();
-    const [avatarText, setAvatarText] = useState("")
     const actions = [
         { icon: User, label: "Informacion Personal" },
         { icon: MapPin, label: "Direcciones" },

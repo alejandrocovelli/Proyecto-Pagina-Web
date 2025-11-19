@@ -36,7 +36,6 @@ export default function Catalogo() {
         try {
             const data = await crearCategoriaService(nuevaCategoria);
             // consola para debugging
-            console.log("Categoria creada:", data);
             showToast({ type: 'success', message: 'Categoría creada exitosamente' });
             // recargar listado de categorias
             await getCategorias();
@@ -45,29 +44,6 @@ export default function Catalogo() {
             showToast({ type: 'error', message: 'Error al crear la categoría' });
         }
     };
-console.log(user);
-    /*const categorias = [
-        {
-            id: 1,
-            title: "Lapicero con 10 minas de colores",
-            image: "../../public/Hello kitty.jpg",
-        },
-        {
-            id: 2,
-            title: "Lapicero moñitos de piedra",
-            image: "../../public/Hello kitty.jpg",
-        },
-        {
-            id: 3,
-            title: "Lapicero borrable animalitos",
-            image: "../../public/Hello kitty.jpg",
-        },
-        {
-            id: 4,
-            title: "Lapicero apliques Kuromi",
-            image: "../../public/Hello kitty.jpg",
-        },
-    ]*/
 
     return (
         <div className="w-full h-screen">

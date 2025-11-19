@@ -32,12 +32,10 @@ export default function Categorias() {
 
       //Trae los datos del modal y lo vuelve un FormData para mandar el req con body en el endpoint
       Object.entries(nuevoProducto).forEach(([key, value]) => {
-        console.log(key, value);
         formData.append(key, value);
       });
 
       const data = await crearProductoService(formData);
-      console.log("Respuesta del servidor:", data);
       showToast({ type: 'success', message: 'Producto creado exitosamente' });
       cargarProductos();
     } catch (error) {
@@ -51,7 +49,6 @@ export default function Categorias() {
       const filtros = {};
       filtros.idCategoria = idCategoria;
       const data = await getProductosService(filtros);
-      console.log("PRODUCTOS:", data.data);
       setProductos(data.data);
     } catch (error) {
       console.error("Error cargando productos:", error);
@@ -62,7 +59,6 @@ export default function Categorias() {
   const cargarCategorias = async () => {
     try {
       const data = await getCategoriasService();
-      console.log("CATEGORIAS:", data.data);
       const secciones = data.data.map((cat) => ({
         id: cat.idCategoria,
         nombre: cat.nombre,
@@ -87,7 +83,6 @@ export default function Categorias() {
       (cat) => cat.id === Number(idCategoria)
     );
     setCategoriaSeleccionada(categoria || null);
-    console.log(categoriaSeleccionada);
   }, [idCategoria, sidebarSections]);
 
   const handleCategoriaClick = (idCategoria) => {

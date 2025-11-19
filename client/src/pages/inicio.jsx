@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import Header from "../components/header"
+import Header from "../components/Header"
 import ProductoCard from "../components/ProductoCard"
 import { getProductosService } from "../services/ProductoService";
 import fondo from "../../public/Group 69.png"
@@ -26,37 +26,6 @@ export default function Inicio() {
     useEffect(() => {
         getProductos();
     }, [])
-
-    /*const bestSellers = [
-        {
-            id: 1,
-            title: "CAJA LAPICERO X12 CAPYBARA",
-            price: 12000,
-            originalPrice: 25000,
-            image: "../../public/capibara.jpg",
-        },
-        {
-            id: 2,
-            title: "CAJA LAPICERO X12 GANCHO PLATA SANRIO",
-            price: 14000,
-            originalPrice: 22000,
-            image: "../../public/Sanrio.jpg",
-        },
-        {
-            id: 3,
-            title: "TIRA LIBRETAS X4 CAPYBARA",
-            price: 6000,
-            originalPrice: 12000,
-            image: "../../public/agenda capibara.jpg",
-        },
-        {
-            id: 4,
-            title: "AGENDA LLAVERO HELLO KITTY",
-            price: 10500,
-            originalPrice: 30000,
-            image: "../../public/Hello kitty.jpg",
-        },
-    ]*/
 
     return (
         <div className="w-full min-h-screen">

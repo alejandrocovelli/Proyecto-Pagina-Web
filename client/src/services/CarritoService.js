@@ -2,7 +2,6 @@ import axiosClient from "./axios.js";
 
 export const crearOrdenService = async (formData) => {
     try {
-        console.log(formData);
         const res = await axiosClient.post("/ordenes", formData);
         return res.data;
     } catch ( e ) {
@@ -13,7 +12,6 @@ export const crearOrdenService = async (formData) => {
 export const getDireccionesService = async () => {
     try {
         const res = await axiosClient.get("/direcciones");
-        console.log(res);
         return res.data;
     } catch (error) {
         throw new Error("Error al obtener direcciones");
@@ -43,7 +41,6 @@ export const getCarrito = async (id) => {
 
 export const updateOrdenService = async (idOrden, formData) => {
     try {
-        console.log(idOrden, formData);
         const res = await axiosClient.put(`/ordenes/${idOrden}`, formData);
         return res.data;
     } catch ( e ) {

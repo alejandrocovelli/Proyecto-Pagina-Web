@@ -14,13 +14,10 @@ export default function Producto() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log(producto);
   useEffect(() => {
-    console.log("Cargando producto con ID:", idProducto );
     const cargarProducto = async () => {
       try {
         const data = await getProductoById(Number(idProducto));
-        console.log("PRODUCTO:", data.data);
 
         setProducto(data.data);
       } catch (error) {
@@ -36,7 +33,6 @@ export default function Producto() {
   const handleAddToCart = async () => {
     try {
       const carrito = await getCarrito(user.idUsuario);
-      console.log(carrito);
       const ordenData = {
         productos: [
           {
@@ -48,7 +44,6 @@ export default function Producto() {
       if(carrito && carrito.result.data.idOrden){
         await updateOrdenService(carrito.result.data.idOrden, ordenData);
       } else {
-        console.log("holaaa");
         await crearOrdenService({
           ...ordenData,
           estado: 1, 

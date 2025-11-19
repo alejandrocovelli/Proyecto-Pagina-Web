@@ -21,7 +21,6 @@ export default function Login() {
 		try {
             e.preventDefault();
             if (activeTab === "Inicio de Sesion") {
-                console.log(correo, contraseña);
                 await loginHandler(correo, contraseña);
                 // El AuthContext se encargará de obtener la información del usuario
                 // redirigir a la página de inicio
