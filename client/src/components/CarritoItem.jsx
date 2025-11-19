@@ -1,12 +1,14 @@
 export default function CarritoItem({
-    title,
-    price,
-    quantity,
-    image,
+    op, // ordenProducto tal como viene del backend
     onQuantityChange,
     onRemove,
 }) {
-    const subtotal = price * quantity
+    // Usamos los nombres exactos que provee el backend
+    const title = op.producto?.nombre ?? `Producto ${op.idProducto}`;
+    const price = Number(op.precioUnidad ?? op.producto?.precio ?? 0);
+    const quantity = Number(op.cantidad ?? 1);
+    const image = op.producto?.foto ?? "/placeholder.svg";
+    const subtotal = Number(op.valorTotal ?? price * quantity);
 
     return (
         <div className="bg-white rounded-lg shadow-md p-6 flex gap-6 items-start">

@@ -31,3 +31,12 @@ export const updateOrdenService = async (idOrden, formData) => {
         throw new Error("Error al crear el orden");
     }
 }
+
+export const deleteOrdenProducto = async (id) => {
+    try {
+        const res = await axiosClient.delete(`/ordenesProductos/${id}`);
+        return res.data; 
+    } catch ( error ) {
+        throw new Error("Error al eliminar el producto de la orden");
+    }
+}

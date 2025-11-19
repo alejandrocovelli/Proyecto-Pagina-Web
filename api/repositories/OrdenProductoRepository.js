@@ -151,8 +151,24 @@ export class OrdenProductoRepository {
         return await sequelize.transaction(async (transaction) => {
             const ordenProducto = await OrdenProducto.findByPk(id, { transaction })
             if(!ordenProducto) throw new Error("Orden-producto no encontrado")
-
+            const orden = await Orden.update(
+                { totalPago: sequelize.literal(`totalPago - ${ordenProducto.valorTotal}`) },
+                { where: { idOrden: ordenProducto.idOrden }, transaction }
+            );
             await ordenProducto.destroy({ transaction })
+
+            // Revisar si quedan líneas para esa orden
+            const restantes = await OrdenProducto.count({ where: { idOrden: ordenProducto.idOrden }, transaction });
+
+            if (restantes === 0) {
+                // Sólo eliminar la orden si está en estado "carrito" (1) — evita borrar órdenes históricas
+                const orden = await Orden.findByPk(ordenProducto.idOrden, { transaction });
+                if (orden && orden.estado === 1) {
+                    await Orden.destroy({ where: { idOrden: ordenProducto.idOrden }, transaction });
+                    // opcional: devolver alguna indicación adicional si quieres
+                }
+            }
+
             return true;
         })
     }
