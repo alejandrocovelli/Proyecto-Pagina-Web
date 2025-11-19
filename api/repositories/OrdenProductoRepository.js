@@ -132,12 +132,80 @@ export class OrdenProductoRepository {
      */
     async updateOrdenProducto(id, ordenProductoData) {
         return await sequelize.transaction(async (transaction) => {
-            const ordenProducto = await OrdenProducto.findByPk(id, { transaction })
-            if(!ordenProducto) throw new Error("Orden-producto no encontrado")
+            const ordenProducto = await OrdenProducto.findByPk(id, { transaction });
+            if (!ordenProducto) throw new Error("Orden-producto no encontrado");
 
-            await ordenProducto.update(ordenProductoData, { transaction })
-            return ordenProducto;
-        })
+            // Valores actuales
+            const cantidadActual = Number(ordenProducto.cantidad ?? 0);
+            const valorTotalActual = Number(ordenProducto.valorTotal ?? 0);
+            const idProducto = ordenProducto.idProducto;
+            const idOrden = ordenProducto.idOrden;
+
+            // Nueva cantidad y/o precio enviados por el cliente (si no vienen, usamos los actuales)
+            const nuevaCantidad = typeof ordenProductoData.cantidad !== "undefined" ? Number(ordenProductoData.cantidad) : cantidadActual;
+            let nuevoPrecioUnidad = typeof ordenProductoData.precioUnidad !== "undefined" ? Number(ordenProductoData.precioUnidad) : null;
+
+            // Si no se envió precioUnidad, tomar precio actual del producto
+            if (nuevoPrecioUnidad === null) {
+                const productoDB = await Producto.findByPk(idProducto, { transaction });
+                if (!productoDB) throw new Error("Producto no encontrado al recalcular precio");
+                nuevoPrecioUnidad = Number(productoDB.precio ?? ordenProducto.precioUnidad ?? 0);
+            }
+
+            // Si nuevaCantidad <= 0 -> eliminamos la línea
+            if (nuevaCantidad <= 0) {
+                // Restar el valor actual del total de la orden
+                await Orden.update(
+                    { totalPago: sequelize.literal(`totalPago - ${valorTotalActual}`) },
+                    { where: { idOrden }, transaction }
+                );
+
+                // Eliminar la línea
+                await ordenProducto.destroy({ transaction });
+
+                // Revisar si quedan líneas; si no hay y la orden está en estado carrito (1), eliminar la orden
+                const restantes = await OrdenProducto.count({ where: { idOrden }, transaction });
+                if (restantes === 0) {
+                    const orden = await Orden.findByPk(idOrden, { transaction });
+                    if (orden && orden.estado === 1) {
+                        await Orden.destroy({ where: { idOrden }, transaction });
+                    }
+                }
+
+                // Retornar indicación de eliminación (opcional)
+                return { eliminado: true };
+            }
+
+            // Calcular nuevo valor total de la línea
+            const nuevoValorTotal = nuevoPrecioUnidad * nuevaCantidad;
+
+            // Actualizar la línea
+            await ordenProducto.update({
+                cantidad: nuevaCantidad,
+                precioUnidad: nuevoPrecioUnidad,
+                valorTotal: nuevoValorTotal
+            }, { transaction });
+
+            // Ajustar el total de la orden por la diferencia
+            const diferencia = nuevoValorTotal - valorTotalActual;
+            if (diferencia !== 0) {
+                await Orden.update(
+                    { totalPago: sequelize.literal(`totalPago + ${diferencia}`) },
+                    { where: { idOrden }, transaction }
+                );
+            }
+
+            // Recargar y devolver la línea actualizada con includes si quieres
+            const ordenProductoActualizado = await OrdenProducto.findByPk(id, {
+                include: [
+                    { model: Producto, as: "producto" },
+                    { model: Orden, as: "orden" }
+                ],
+                transaction
+            });
+
+            return ordenProductoActualizado;
+        });
     }
 
     /**

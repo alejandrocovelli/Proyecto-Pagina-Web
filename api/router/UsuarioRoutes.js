@@ -18,6 +18,7 @@
 import { Router } from "express"
 import { UsuarioController } from "../controllers/UsuarioController.js"
 import { validateCreateUsuario, validateUpdateUsuario, validateUsuarioId } from "../validators/usuarioValidator.js";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js";
 
 // Crear router para rutas de usuario
 const router = Router()
@@ -69,7 +70,7 @@ router.get("/:id", validateUsuarioId, UsuarioController.getUsuarioById);
  *   "data": {...}
  * }
  */
-router.post("/", validateCreateUsuario, UsuarioController.createUsuario);
+router.post("/", validateCreateUsuario, AuthMiddleware, UsuarioController.createUsuario);
 
 /**
  * PUT /api/usuarios/:id
@@ -91,7 +92,7 @@ router.post("/", validateCreateUsuario, UsuarioController.createUsuario);
  *   "data": {...}
  * }
  */
-router.put("/:id", [...validateUsuarioId, ...validateUpdateUsuario], UsuarioController.updateUsuario);
+router.put("/:id", [...validateUsuarioId, ...validateUpdateUsuario], AuthMiddleware, UsuarioController.updateUsuario);
 
 /**
  * DELETE /api/usuarios/:id
@@ -105,6 +106,6 @@ router.put("/:id", [...validateUsuarioId, ...validateUpdateUsuario], UsuarioCont
  *   "mensaje": "Usuario eliminado correctamente"
  * }
  */
-router.delete("/:id", validateUsuarioId, UsuarioController.deleteUsuario);
+router.delete("/:id", validateUsuarioId, AuthMiddleware, UsuarioController.deleteUsuario);
 
 export default router;

@@ -13,6 +13,7 @@ import { Router } from "express"
 import { ProductoController } from "../controllers/ProductoController.js"
 import { validateCreateProducto, validateGetProduct, validateProductoId, validateUpdateProducto } from "../validators/productoValidator.js";
 import multer from "multer";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js";
 
 // Configurar multer para subida de archivos temporales
 // dest: "uploads/" - directorio donde se guardan temporalmente
@@ -31,7 +32,7 @@ const router = Router()
  *   "idCategoria": 1
  * }
  */
-router.get("/", validateGetProduct, ProductoController.getProductos)
+router.get("/", validateGetProduct, AuthMiddleware, ProductoController.getProductos)
 
 /**
  * GET /api/productos/:id
@@ -40,7 +41,7 @@ router.get("/", validateGetProduct, ProductoController.getProductos)
  * 
  * Parámetros: id (número entero positivo)
  */
-router.get("/:idProducto", validateProductoId, ProductoController.getProductoById)
+router.get("/:idProducto", validateProductoId, AuthMiddleware, ProductoController.getProductoById)
 
 /**
  * POST /api/productos
@@ -56,7 +57,7 @@ router.get("/:idProducto", validateProductoId, ProductoController.getProductoByI
  * 
  * Nota: upload.single("imagen") parsea el archivo con clave "imagen"
  */
-router.post("/", upload.single("foto"), validateCreateProducto, ProductoController.createProducto)
+router.post("/", upload.single("foto"), validateCreateProducto, AuthMiddleware, ProductoController.createProducto)
 
 /**
  * PUT /api/productos/:id
@@ -72,7 +73,7 @@ router.post("/", upload.single("foto"), validateCreateProducto, ProductoControll
  *   "foto": "https://..."
  * }
  */
-router.put("/:id", [...validateProductoId, ...validateUpdateProducto], ProductoController.updateProducto)
+router.put("/:id", [...validateProductoId, ...validateUpdateProducto], AuthMiddleware, ProductoController.updateProducto)
 
 /**
  * DELETE /api/productos/:id
@@ -81,6 +82,6 @@ router.put("/:id", [...validateProductoId, ...validateUpdateProducto], ProductoC
  * 
  * Parámetros: id (número entero positivo)
  */
-router.delete("/:id", validateProductoId, ProductoController.deleteProducto)
+router.delete("/:id", validateProductoId, AuthMiddleware, ProductoController.deleteProducto)
 
 export default router;

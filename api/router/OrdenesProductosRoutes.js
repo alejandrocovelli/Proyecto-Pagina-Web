@@ -26,6 +26,7 @@
 import { Router } from "express"
 import { OrdenProductoController } from "../controllers/OrdenProductoController.js"
 import { validateCreateOrdenProducto, validateUpdateOrdenProducto } from "../validators/ordenProductoValidator.js";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js";
 
 const router = Router()
 
@@ -40,7 +41,7 @@ const router = Router()
  * 
  * Sin autenticación requerida
  */
-router.get("/", OrdenProductoController.getOrdenesProductos)
+router.get("/", AuthMiddleware, OrdenProductoController.getOrdenesProductos)
 
 /**
  * GET /api/ordenesProductos/:id
@@ -56,7 +57,7 @@ router.get("/", OrdenProductoController.getOrdenesProductos)
  * 
  * Sin validación explícita de parámetro (validar si es necesario)
  */
-router.get("/:id", OrdenProductoController.getOrdenProductoById)
+router.get("/:id", AuthMiddleware, OrdenProductoController.getOrdenProductoById)
 
 /**
  * POST /api/ordenesProductos
@@ -85,7 +86,7 @@ router.get("/:id", OrdenProductoController.getOrdenProductoById)
  * Nota: Normalmente no se llama directamente
  * Se crea automáticamente en OrdenRepository.createOrden()
  */
-router.post("/", validateCreateOrdenProducto, OrdenProductoController.createOrdenProducto)
+router.post("/", validateCreateOrdenProducto, AuthMiddleware, OrdenProductoController.createOrdenProducto)
 
 /**
  * PUT /api/ordenesProductos/:id
@@ -114,7 +115,7 @@ router.post("/", validateCreateOrdenProducto, OrdenProductoController.createOrde
  * 
  * Uso: Corregir cantidad o precios en caso de error
  */
-router.put("/:id", [...validateUpdateOrdenProducto], OrdenProductoController.updateOrdenProducto)
+router.put("/:id", [...validateUpdateOrdenProducto], AuthMiddleware, OrdenProductoController.updateOrdenProducto)
 
 /**
  * DELETE /api/ordenesProductos/:id
@@ -130,6 +131,6 @@ router.put("/:id", [...validateUpdateOrdenProducto], OrdenProductoController.upd
  * 
  * Sin validación explícita (validar si es necesario)
  */
-router.delete("/:id", OrdenProductoController.deleteOrdenProducto)
+router.delete("/:id", AuthMiddleware, OrdenProductoController.deleteOrdenProducto)
 
 export default router;

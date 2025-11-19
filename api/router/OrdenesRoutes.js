@@ -24,6 +24,7 @@
 import { Router } from "express"
 import { OrdenController } from "../controllers/OrdenController.js"
 import { validateCreateOrden, validateOrdenId, validateUpdateOrden, validateUsuarioId } from "../validators/ordenValidator.js";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js";
 
 const router = Router()
 
@@ -38,7 +39,7 @@ const router = Router()
  * 
  * Sin autenticación requerida
  */
-router.get("/", OrdenController.getOrdenes)
+router.get("/", AuthMiddleware, OrdenController.getOrdenes)
 
 /**
  * GET /api/ordenes/:id
@@ -55,9 +56,9 @@ router.get("/", OrdenController.getOrdenes)
  * 
  * Middleware: validateOrdenId - Valida que ID sea entero > 0
  */
-router.get("/:id", validateOrdenId, OrdenController.getOrdenById)
+router.get("/:id", validateOrdenId, AuthMiddleware, OrdenController.getOrdenById)
 
-router.get("/carrito/:idUsuario", validateUsuarioId, OrdenController.getCarrito)
+router.get("/carrito/:idUsuario", validateUsuarioId, AuthMiddleware, OrdenController.getCarrito)
 
 /**
  * POST /api/ordenes
@@ -92,7 +93,7 @@ router.get("/carrito/:idUsuario", validateUsuarioId, OrdenController.getCarrito)
  * - Cálculo de precios
  * - Aplicación de descuentos mayoristas
  */
-router.post("/", validateCreateOrden, OrdenController.createOrden)
+router.post("/", validateCreateOrden, AuthMiddleware, OrdenController.createOrden)
 
 /**
  * PUT /api/ordenes/:id
@@ -120,7 +121,7 @@ router.post("/", validateCreateOrden, OrdenController.createOrden)
  * 
  * Uso típico: Cambiar estado de la orden (pendiente → en proceso → enviado)
  */
-router.put("/:idOrden", [...validateOrdenId, ...validateUpdateOrden], OrdenController.updateOrden)
+router.put("/:idOrden", [...validateOrdenId, ...validateUpdateOrden], AuthMiddleware, OrdenController.updateOrden)
 
 /**
  * DELETE /api/ordenes/:id
@@ -141,6 +142,6 @@ router.put("/:idOrden", [...validateOrdenId, ...validateUpdateOrden], OrdenContr
  * - Registros en tabla OrdenProducto asociados
  * - (Según configuración de Sequelize con cascade)
  */
-router.delete("/:id", validateOrdenId, OrdenController.deleteOrden)
+router.delete("/:id", validateOrdenId, AuthMiddleware, OrdenController.deleteOrden)
 
 export default router;

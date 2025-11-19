@@ -10,6 +10,7 @@
 import { Router } from "express"
 import { CategoriaController } from "../controllers/CategoriaController.js"
 import { validateCategoriaId, validateCreateCategoria, validateUpdateCategoria } from "../validators/categoriaValidator.js";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js";
 
 // Crear router para rutas de categorías
 const router = Router()
@@ -25,7 +26,7 @@ const router = Router()
  *   "data": [...]
  * }
  */
-router.get("/", CategoriaController.getCategorias)
+router.get("/", AuthMiddleware, CategoriaController.getCategorias)
 
 /**
  * GET /api/categorias/:id
@@ -34,7 +35,7 @@ router.get("/", CategoriaController.getCategorias)
  * 
  * Parámetros: id (número entero positivo)
  */
-router.get("/:id", validateCategoriaId, CategoriaController.getCategoriaById)
+router.get("/:id", validateCategoriaId, AuthMiddleware, CategoriaController.getCategoriaById)
 
 /**
  * POST /api/categorias
@@ -46,7 +47,7 @@ router.get("/:id", validateCategoriaId, CategoriaController.getCategoriaById)
  *   "nombre": "Nombre de la categoría"
  * }
  */
-router.post("/", validateCreateCategoria, CategoriaController.createCategoria)
+router.post("/", validateCreateCategoria, AuthMiddleware, CategoriaController.createCategoria)
 
 /**
  * PUT /api/categorias/:id
@@ -59,7 +60,7 @@ router.post("/", validateCreateCategoria, CategoriaController.createCategoria)
  *   "nombre": "Nuevo nombre"
  * }
  */
-router.put("/:id", [...validateCategoriaId, ...validateUpdateCategoria], CategoriaController.updateCategoria)
+router.put("/:id", [...validateCategoriaId, ...validateUpdateCategoria], AuthMiddleware, CategoriaController.updateCategoria)
 
 /**
  * DELETE /api/categorias/:id
@@ -68,6 +69,6 @@ router.put("/:id", [...validateCategoriaId, ...validateUpdateCategoria], Categor
  * 
  * Parámetros: id (número entero positivo)
  */
-router.delete("/:id", validateCategoriaId, CategoriaController.deleteCategoria)
+router.delete("/:id", validateCategoriaId, AuthMiddleware, CategoriaController.deleteCategoria)
 
 export default router;

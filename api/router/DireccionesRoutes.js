@@ -27,6 +27,7 @@
 import { Router } from "express"
 import { DireccionController } from "../controllers/DireccionController.js"
 import { validateCreateDireccion, validateDireccionId, validateUpdateDireccion } from "../validators/direccionValidator.js";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js";
 
 const router = Router()
 
@@ -41,7 +42,7 @@ const router = Router()
  * 
  * Sin autenticación requerida
  */
-router.get("/", DireccionController.getDirecciones)
+router.get("/", AuthMiddleware, DireccionController.getDirecciones)
 
 /**
  * GET /api/direcciones/:id
@@ -58,7 +59,7 @@ router.get("/", DireccionController.getDirecciones)
  * 
  * Middleware: validateDireccionId - Valida que ID sea entero > 0
  */
-router.get("/:id", validateDireccionId, DireccionController.getDireccionById)
+router.get("/:id", validateDireccionId, AuthMiddleware, DireccionController.getDireccionById)
 
 /**
  * POST /api/direcciones
@@ -82,7 +83,7 @@ router.get("/:id", validateDireccionId, DireccionController.getDireccionById)
  * - Valida longitud de campos
  * - Valida que idUsuario sea entero
  */
-router.post("/", validateCreateDireccion, DireccionController.createDireccion)
+router.post("/", validateCreateDireccion, AuthMiddleware, DireccionController.createDireccion)
 
 /**
  * PUT /api/direcciones/:id
@@ -108,7 +109,7 @@ router.post("/", validateCreateDireccion, DireccionController.createDireccion)
  * - Valida que ID sea entero > 0
  * - Valida cada campo si se proporciona (todos opcionales)
  */
-router.put("/:id", [...validateDireccionId, ...validateUpdateDireccion], DireccionController.updateDireccion)
+router.put("/:id", [...validateDireccionId, ...validateUpdateDireccion], AuthMiddleware, DireccionController.updateDireccion)
 
 /**
  * DELETE /api/direcciones/:id
@@ -128,6 +129,6 @@ router.put("/:id", [...validateDireccionId, ...validateUpdateDireccion], Direcci
  * Nota: Si la dirección está asociada a una orden, 
  * podría causar problemas de integridad según configuración de cascada
  */
-router.delete("/:id", validateDireccionId, DireccionController.deleteDireccion)
+router.delete("/:id", validateDireccionId, AuthMiddleware, DireccionController.deleteDireccion)
 
 export default router;

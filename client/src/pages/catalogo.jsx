@@ -91,7 +91,7 @@ console.log(user);
                                 <p>Cargando categorias...</p>
                             ) :
                                 categorias.map((categoria) => (
-                                    <CategoriaCard key={categoria.idCategoria} image={categoria.foto} nombre={categoria.nombre} idCategoria={categoria.idCategoria} />
+                                    <CategoriaCard key={categoria.idCategoria} image={categoria.productos[0]?.foto} nombre={categoria.nombre} idCategoria={categoria.idCategoria} />
                                 ))
                             }
                         </div>

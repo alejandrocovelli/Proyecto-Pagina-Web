@@ -1,38 +1,38 @@
 export default function CarritoItem({
     op, // ordenProducto tal como viene del backend
-    onQuantityChange,
+    onCantidadChange,
     onRemove,
 }) {
     // Usamos los nombres exactos que provee el backend
-    const title = op.producto?.nombre ?? `Producto ${op.idProducto}`;
-    const price = Number(op.precioUnidad ?? op.producto?.precio ?? 0);
-    const quantity = Number(op.cantidad ?? 1);
-    const image = op.producto?.foto ?? "/placeholder.svg";
-    const subtotal = Number(op.valorTotal ?? price * quantity);
+    const nombre = op.producto?.nombre ?? `Producto ${op.idProducto}`;
+    const precio = Number(op.precioUnidad ?? op.producto?.precio ?? 0);
+    const cantidad = Number(op.cantidad ?? 1);
+    const foto = op.producto?.foto ?? "../../public/default-ui-image-placeholder.webp";
+    const valorTotal = Number(op.valorTotal ?? precio * cantidad);
 
     return (
         <div className="bg-white rounded-lg shadow-md p-6 flex gap-6 items-start">
             <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
-                <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
+                <img src={foto || "../../public/default-ui-image-placeholder.webp"} alt={nombre} className="w-full h-full object-cover" />
             </div>
 
             <div className="flex-1">
-                <h3 className="text-lg font-semibold text-customPurple1 mb-2">{title}</h3>
+                <h3 className="text-lg font-semibold text-customPurple1 mb-2">{nombre}</h3>
                 <p className="text-gray-600 text-sm mb-4">
-                    ${price.toLocaleString()} x {quantity} = <span className="font-bold text-customPurple1">${subtotal.toLocaleString()}</span>
+                    ${precio.toLocaleString()} x {cantidad} = <span className="font-bold text-customPurple1">${valorTotal.toLocaleString()}</span>
                 </p>
 
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-3 bg-gray-100 rounded-lg p-2">
                         <button
-                            onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
+                            onClick={() => onCantidadChange(Math.max(1, cantidad - 1))}
                             className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center hover:bg-gray-300 transition text-sm"
                         >
                             −
                         </button>
-                        <span className="w-6 text-center font-semibold text-sm">{quantity}</span>
+                        <span className="w-6 text-center font-semibold text-sm">{cantidad}</span>
                         <button
-                            onClick={() => onQuantityChange(quantity + 1)}
+                            onClick={() => onCantidadChange(cantidad + 1)}
                             className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center hover:bg-gray-300 transition text-sm"
                         >
                             +
@@ -49,7 +49,7 @@ export default function CarritoItem({
             </div>
 
             <div className="text-right">
-                <p className="text-2xl font-bold text-customPurple1">${subtotal.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-customPurple1">${valorTotal.toLocaleString()}</p>
             </div>
         </div>
     )

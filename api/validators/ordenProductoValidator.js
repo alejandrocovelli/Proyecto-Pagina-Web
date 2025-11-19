@@ -82,21 +82,21 @@ export const validateCreateOrdenProducto = [
  * Si pasa: Procede al controlador
  */
 export const validateUpdateOrdenProducto = [
-    // Cantidad del producto
+    // Cantidad del producto (opcional en update; puede ser 0 para eliminar)
     body('cantidad')
-        .exists().withMessage('La cantidad es requerida')
-        .isInt({ min: 1 }).withMessage('La cantidad debe ser un número entero mayor a 0'),
-    
-    // Precio unitario
+        .optional()
+        .isInt({ min: 0 }).withMessage('La cantidad debe ser un número entero mayor o igual a 0'),
+
+    // Precio unitario (opcional)
     body('precioUnidad')
-        .exists().withMessage('El precio es requerido')
+        .optional()
         .isInt({ min: 0 }).withMessage('El precio debe ser un número mayor o igual a 0'),
 
-    // Valor total
+    // Valor total (opcional)
     body('valorTotal')
-        .exists().withMessage('El valor total es requerido')
+        .optional()
         .isInt({ min: 0 }).withMessage('El valor total debe ser un número mayor o igual a 0'),
-    
+
     // Middleware de verificación de errores
     (req, res, next) => {
         validateResult(req, res, next);

@@ -10,6 +10,25 @@ export const crearOrdenService = async (formData) => {
     }
 }
 
+export const getDireccionesService = async () => {
+    try {
+        const res = await axiosClient.get("/direcciones");
+        console.log(res);
+        return res.data;
+    } catch (error) {
+        throw new Error("Error al obtener direcciones");
+    }
+};
+
+export const crearDireccionService = async (formData) => {
+    try {
+        const res = await axiosClient.post("/direcciones", formData);
+        return res.data;
+    } catch ( error ) {
+        throw new Error("Error al crear la dirección");
+    }
+}
+
 export const getCarrito = async (id) => {
     try {
         const res = await axiosClient.get(`/ordenes/carrito/${id}`);
@@ -29,6 +48,15 @@ export const updateOrdenService = async (idOrden, formData) => {
         return res.data;
     } catch ( e ) {
         throw new Error("Error al crear el orden");
+    }
+}
+
+export const updateOrdenProducto = async (idOrdenProducto, body) => {
+    try {
+        const res = await axiosClient.put(`/ordenesProductos/${idOrdenProducto}`, body);
+        return res.data;
+    } catch ( error ) {
+        throw new Error("Error al actualizar orden-producto");
     }
 }
 

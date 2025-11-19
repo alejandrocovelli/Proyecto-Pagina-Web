@@ -26,8 +26,8 @@ export class DireccionService {
      * @returns {Promise<Object>} Objeto con success y data
      * {success: true, data: Array de direcciones}
      */
-    async getDirecciones() {
-        const direcciones = await this.direccionRepository.getDirecciones();
+    async getDirecciones(idUsuario) {
+        const direcciones = await this.direccionRepository.getDirecciones(idUsuario);
         return { success: true, data: direcciones };
     }
 

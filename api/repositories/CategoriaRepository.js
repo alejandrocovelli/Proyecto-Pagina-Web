@@ -13,6 +13,7 @@
 
 import { Categoria } from "../models/Categoria.js";
 import { sequelize } from "../config/database.js";
+import { Producto } from "../models/Producto.js";
 
 export class CategoriaRepository {
     /**
@@ -28,6 +29,15 @@ export class CategoriaRepository {
                 attributes: [
                     "idCategoria",
                     "nombre"
+                ],
+                include: [
+                    {
+                        model: Producto,
+                        as: "productos",
+                        attributes: ["idProducto", "nombre", "foto", "precio"],
+                        separate: true,
+                        limit: 1
+                    }
                 ],
                 transaction
             })

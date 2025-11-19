@@ -40,7 +40,8 @@ export class DireccionController {
      */
     static async getDirecciones(req, res) {
         try {
-            const result = await direccionService.getDirecciones()
+            const { idUsuario } = req.user;
+            const result = await direccionService.getDirecciones(idUsuario)
             if(!result) {
                 res.status(400).json({ error: "Error al listar direcciones", result})
             }

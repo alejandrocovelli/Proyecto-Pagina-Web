@@ -23,9 +23,10 @@ export class DireccionRepository {
      * @returns {Promise<Array>} Array con todas las direcciones
      * @throws {Error} Si no se encuentran direcciones
      */
-    async getDirecciones() {
+    async getDirecciones(idUsuario) {
         return await sequelize.transaction(async (transaction) => {
             const direcciones = await Direccion.findAll({
+                where: { idUsuario },
                 attributes: [
                     "idDireccion",
                     "direccion",

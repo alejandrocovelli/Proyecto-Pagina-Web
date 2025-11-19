@@ -36,7 +36,7 @@ export default function Usuario() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
                             {actions.map((action, i) => (
                                 <button
-                                onClick={() => logoutHandler()}
+                                onClick={action.label == "Cerrar Sesion" ? () => logoutHandler() : null}
                                 key={i}
                                     className="bg-white rounded-lg p-6 flex flex-col items-center justify-center gap-4 shadow-md hover:shadow-lg transition hover:scale-105 cursor-pointer"
                                 >

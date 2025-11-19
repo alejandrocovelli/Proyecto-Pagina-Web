@@ -6,17 +6,70 @@ import { useEffect, useState } from "react";
 import ModalCrear from "../components/ModalCrear";
 import { useNavigate, } from "react-router-dom";
 import CarritoItem from "../components/CarritoItem";
-import { deleteOrdenProducto, getCarrito, updateOrdenService } from "../services/CarritoService";
+import { crearDireccionService, deleteOrdenProducto, getCarrito, updateOrdenProducto, updateOrdenService } from "../services/CarritoService";
 import { useAuth } from "../hooks/useAuth";
 import fondo from "../../public/Group 69.png"
+import ModalDireccion from "../components/ModalDireccion";
 
 export default function Carrito() {
     const [carrito, setCarrito] = useState([]) // aquí guardaremos exactamente data.ordenProductos
     const [orderMeta, setOrderMeta] = useState(null); // aquí guardamos data (idOrden, totalPago, usuario, estado)
     const [loading, setLoading] = useState(false);
+    const [openDireccion, setOpenDireccion] = useState(false);
     const { user } = useAuth();
 
     const navigate = useNavigate()
+
+    const handleOpenPago = () => {
+        setOpenDireccion(true);
+    };
+
+    // Callback cuando el modal devuelve la dirección
+    const handleDireccionSubmit = async (direccionPayload) => {
+        // direccionPayload puede ser:
+        // - { idDireccion, direccionObj }  -> usuario seleccionó una dirección existente
+        // - { direccion, ciudad, barrio }  -> usuario creó una nueva dirección
+
+        if (!user?.idUsuario) {
+            console.error("Usuario no autenticado, no se puede crear/usar dirección.");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            // Si es dirección existente, no la creamos: solo avanzamos con la orden
+            if (direccionPayload?.idDireccion) {
+                // Nota: por ahora actualizamos solo el estado de la orden.
+                // Si quieres asociar idDireccion a la orden, debemos permitir idDireccion en el backend (validator + controller).
+                if (orderMeta?.idOrden) {
+                    await updateOrdenService(orderMeta.idOrden, { estado: 2 }); // 2 = en proceso
+                }
+                setOpenDireccion(false);
+                return;
+            }
+
+            // Si viene un objeto nuevo, lo creamos y luego actualizamos la orden
+            if (direccionPayload?.direccion) {
+                await crearDireccionService({ ...direccionPayload, idUsuario: user.idUsuario });
+                if (orderMeta?.idOrden) {
+                    await updateOrdenService(orderMeta.idOrden, { estado: 2 }); // 2 = en proceso
+                }
+                setOpenDireccion(false);
+                navigate("/ordenes");
+                return;
+            }
+
+        } catch (error) {
+            console.error("Error procesando la dirección:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const comprar = async () => {
+        // antiguamente compraba directamente; ahora abrimos modal para pedir dirección
+        handleOpenPago();
+    }
 
     const cargarCarrito = async () => {
         if (!user?.idUsuario) return;
@@ -71,30 +124,21 @@ export default function Carrito() {
 
     // Handler para cambiar cantidad desde UI.
     // Usamos los nombres que vienen del backend: op.cantidad, op.idProducto, op.idOrdenProducto
-    const handleQuantityChange = async (op, newQuantity) => {
+    const handleQuantityChange = async (op, nuevaCantidad) => {
+        // Si no hay orden persistida en backend, actualizar localmente
         if (!orderMeta?.idOrden) {
-            // Carrito no persistido: actualizar UI localmente
-            setCarrito((prev) => prev.map((it) => it.idOrdenProducto === op.idOrdenProducto ? { ...it, cantidad: newQuantity } : it));
+            setCarrito((prev) => prev.map((it) => it.idOrdenProducto === op.idOrdenProducto ? { ...it, cantidad: nuevaCantidad } : it));
             return;
         }
 
-        const delta = Number(newQuantity) - Number(op.cantidad);
-        if (delta === 0) return;
-
-        if (delta > 0) {
-            try {
-                await updateOrdenService(orderMeta.idOrden, {
-                    productos: [{ idProducto: op.idProducto, cantidad: delta }]
-                });
-                await cargarCarrito();
-            } catch (error) {
-                console.error("Error al aumentar cantidad en backend:", error);
-            }
-        } else {
-            // Decremento: tu backend actual no soporta decrementar con el endpoint (según lo que compartiste).
-            // Comportamiento intermedio: actualizar UI localmente y avisar.
-            console.warn("El backend actual no soporta decrementar cantidades con updateOrden; solo se actualizó la UI localmente.");
-            setCarrito((prev) => prev.map((it) => it.idOrdenProducto === op.idOrdenProducto ? { ...it, cantidad: newQuantity } : it));
+        setLoading(true);
+        try {
+            await updateOrdenProducto(op.idOrdenProducto, { cantidad: Number(nuevaCantidad) });
+            await cargarCarrito();
+        } catch (error) {
+            console.error("Error actualizando cantidad:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -106,8 +150,6 @@ export default function Carrito() {
         setLoading(true);
         try {
             await deleteOrdenProducto(op.idOrdenProducto);
-            setCarrito((prev) => prev.filter((it) => it.idOrdenProducto !== op.idOrdenProducto));
-            console.warn("Producto eliminado en UI. Implementa endpoint para eliminar en backend y sincronizar cambios.");
             await cargarCarrito();
         } catch (error) {
             console.error("Error al eliminar producto del carrito:", error);
@@ -139,7 +181,7 @@ export default function Carrito() {
                                     <CarritoItem
                                         key={op.idOrdenProducto ?? op.idProducto}
                                         op={op}
-                                        onQuantityChange={(newQ) => handleQuantityChange(op, newQ)}
+                                        onCantidadChange={(nueva) => handleQuantityChange(op, nueva)}
                                         onRemove={() => handleDeleteProduct(op)}
                                     />
                                 ))}
@@ -186,8 +228,8 @@ export default function Carrito() {
                                             </span>
                                         </div>
 
-                                        <button className="w-full bg-customPurple1 hover:bg-purple-600 text-white font-bold py-3 rounded-lg transition mb-3">
-                                            Proceder al Pago
+                                        <button onClick={comprar} className="w-full bg-customPurple1 hover:bg-purple-600 text-white font-bold py-3 rounded-lg transition mb-3">
+                                            Comprar
                                         </button>
                                     </div>
                                 </div>
@@ -196,6 +238,7 @@ export default function Carrito() {
                     )}
                 </div>
             </div>
+            <ModalDireccion open={openDireccion} setOpen={setOpenDireccion} onSubmit={handleDireccionSubmit} />
         </div>
     );
 }
