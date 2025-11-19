@@ -24,7 +24,7 @@ export default function Header(currentPage) {
                     </Link>
                     <Link to="/usuario" className="flex flex-col items-center hover:opacity-80 transition">
                         <User size={25}/>
-                        <span className="text-lg font-medium">Acceder</span>
+                        <span className="text-lg font-medium">Perfil</span>
                     </Link>
                 </nav>
             </div>

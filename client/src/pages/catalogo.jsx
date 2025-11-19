@@ -4,11 +4,13 @@ import Header from "../components/header";
 import { getCategoriasService } from "../services/ProductoService";
 import ModalCrearCategoria from "../components/ModalCrearCategoria";
 import { crearCategoriaService } from "../services/ProductoService";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Catalogo() {
     const [categorias, setCategorias] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openCategoriaModal, setOpenCategoriaModal] = useState(false);
+    const { user } = useAuth();
 
     const getCategorias = async () => {
         setLoading(true);
@@ -37,7 +39,7 @@ export default function Catalogo() {
             console.error("Error creando categoría:", error);
         }
     };
-
+console.log(user);
     /*const categorias = [
         {
             id: 1,
@@ -75,12 +77,12 @@ export default function Catalogo() {
 
             {/* Categorias Grid */}
             <section className="relative py-12 px-8 bg-gradient-to-b from-white to-gray-50">
-                <button
+                {user && user.tipo == 1 && <button
                     className="absolute right-5 top-2 bg-customPurple1 text-white px-5 py-2 rounded text-sm hover:bg-purple-600 transition"
                     onClick={() => setOpenCategoriaModal(true)}
                 >
                     +
-                </button>
+                </button>}
                 <div className="relative">
                     <div className="max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-40">

@@ -2,10 +2,12 @@ import Header from "../components/header"
 import UsuarioCard from "../components/UsuarioCard"
 import { User, Gem, CreditCard, DoorClosed, Search, MapPin } from "lucide-react"
 import { useAuth } from "../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 
 export default function Usuario() {
-    const { logoutHandler } = useAuth();
+    const { user, logoutHandler } = useAuth();
+    const [avatarText, setAvatarText] = useState("")
     const actions = [
         { icon: User, label: "Informacion Personal" },
         { icon: MapPin, label: "Direcciones" },
@@ -15,6 +17,10 @@ export default function Usuario() {
         { icon: DoorClosed, label: "Cerrar Sesion" },
     ]
 
+    /*useEffect(() => {
+        setAvatarText(user?.nombre.slice(0, 2).toUpperCase());
+    }, []);*/
+
     return (
         <div className="w-full min-h-screen flex flex-col">
             <Header currentPage="Usuario" />
@@ -23,7 +29,7 @@ export default function Usuario() {
                     <div className="max-w-5xl relative h-full z-10 bg-customBlue3 px-24 py-10 rounded-t-3xl w-[80vw] mt-auto">
                         {/* User Card */}
                         <div className="mb-8">
-                            <UsuarioCard name="Alejandro Covelli" email="alejandro_covelli07@gmail.com" avatarText="AC" isPremium />
+                            <UsuarioCard name={user.nombre} email={user.correo} avatarText="yo" isPremium />
                         </div>
 
                         {/* Actions Grid */}

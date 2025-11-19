@@ -6,6 +6,7 @@ import { getCategoriasService, crearProductoService, getProductosService } from 
 import { useEffect, useState } from "react";
 import ModalCrear from "../components/ModalCrear";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Categorias() {
     const [sidebarSections, setSidebarSections] = useState([]);
@@ -13,6 +14,7 @@ export default function Categorias() {
     const [productos, setProductos] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const { idCategoria } = useParams();
+    const { user } = useAuth();
 
     const navigate = useNavigate();
 
@@ -92,12 +94,12 @@ export default function Categorias() {
 
                     {/* Main Content */}
                     <main className="flex-1 relative z-10 px-20">
-                        <button
+                        {user && user.tipo == 1 && <button
                             className="absolute right-5 top-5 bg-customPurple1 text-white px-5 py-2 rounded text-sm hover:bg-purple-600 transition"
                             onClick={() => setOpenModal(true)}
                         >
                             +
-                        </button>
+                        </button>}
                         <div className="p-8">
                             {/* Breadcrumb */}
                             <div className="text-gray-600 text-sm mb-8">
