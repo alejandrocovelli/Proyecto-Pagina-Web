@@ -1,28 +1,8 @@
-/**
- * ========================================
- * REPOSITORY: DIRECCION
- * ========================================
- * Capa de acceso a datos para direcciones
- * Gestiona todas las operaciones CRUD de direcciones
- * 
- * Responsabilidades:
- * - Consultar direcciones de la base de datos
- * - Incluir información del usuario propietario
- * - Usar transacciones para integridad
- */
-
 import { Direccion } from "../models/Direccion.js";
 import { Usuario } from "../models/Usuario.js";
 import { sequelize } from "../config/database.js";
 
 export class DireccionRepository {
-    /**
-     * Obtener todas las direcciones
-     * Incluye datos del usuario propietario
-     * 
-     * @returns {Promise<Array>} Array con todas las direcciones
-     * @throws {Error} Si no se encuentran direcciones
-     */
     async getDirecciones(idUsuario) {
         return await sequelize.transaction(async (transaction) => {
             const direcciones = await Direccion.findAll({
@@ -48,13 +28,6 @@ export class DireccionRepository {
         })
     }
 
-    /**
-     * Obtener dirección específica por ID
-     * 
-     * @param {Number} id - ID de la dirección
-     * @returns {Promise<Object>} Objeto dirección con usuario
-     * @throws {Error} Si la dirección no existe
-     */
     async getDireccionById(id) {
         return await sequelize.transaction(async (transaction) => {
             const direccion = await Direccion.findByPk(id, {
@@ -79,13 +52,6 @@ export class DireccionRepository {
         })
     }
 
-    /**
-     * Crear nueva dirección
-     * 
-     * @param {Object} direccionData - Datos de la dirección
-     * @returns {Promise<Object>} Dirección creada
-     * @throws {Error} Si hay error en la creación
-     */
     async createDireccion(direccionData) {
         return await sequelize.transaction(async (transaction) => {
             const direccion = await Direccion.create(direccionData, { transaction })
@@ -95,14 +61,6 @@ export class DireccionRepository {
         })
     }
 
-    /**
-     * Actualizar dirección existente
-     * 
-     * @param {Number} id - ID de la dirección
-     * @param {Object} direccionData - Datos a actualizar
-     * @returns {Promise<Object>} Dirección actualizada
-     * @throws {Error} Si la dirección no existe
-     */
     async updateDireccion(id, direccionData) {
         return await sequelize.transaction(async (transaction) => {
             const direccion = await Direccion.findByPk(id, { transaction })
@@ -113,13 +71,6 @@ export class DireccionRepository {
         })
     }
 
-    /**
-     * Eliminar dirección
-     * 
-     * @param {Number} id - ID de la dirección
-     * @returns {Promise<Boolean>} true si fue eliminada
-     * @throws {Error} Si la dirección no existe
-     */
     async deleteDireccion(id) {
         return await sequelize.transaction(async (transaction) => {
             const direccion = await Direccion.findByPk(id, { transaction })

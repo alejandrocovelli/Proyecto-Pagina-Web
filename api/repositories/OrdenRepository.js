@@ -1,23 +1,3 @@
-/**
- * ========================================
- * REPOSITORY: ORDEN
- * ========================================
- * Capa de acceso a datos para órdenes/pedidos
- * Gestiona todas las operaciones CRUD de órdenes
- * 
- * Responsabilidades:
- * - Consultar órdenes con productos asociados
- * - Crear órdenes con cálculo de precios
- * - Aplicar descuentos mayoristas según tipo de cliente
- * - Crear registros en tabla junction (OrdenProducto)
- * - Usar transacciones para integridad
- * 
- * Lógica de negocio crítica:
- * - Clientes tipo 3 (mayoristas) reciben descuento si total >= $140,000
- * - Se almacena precio unitario y total en tiempo de compra
- * - Cada orden tiene múltiples productos relacionados
- */
-
 import { Orden } from "../models/Orden.js";
 import { Usuario } from "../models/Usuario.js";
 import { OrdenProducto } from "../models/OrdenProducto.js";
@@ -26,13 +6,6 @@ import { sequelize } from "../config/database.js";
 import { Direccion } from "../models/Direccion.js";
 
 export class OrdenRepository {
-    /**
-     * Obtener todas las órdenes
-     * Incluye usuario propietario y todos los productos en la orden
-     * 
-     * @returns {Promise<Array>} Array con todas las órdenes y sus productos
-     * @throws {Error} Si no se encuentran órdenes
-     */
     async getOrdenes() {
         return await sequelize.transaction(async (transaction) => {
             const ordenes = await Orden.findAll({
@@ -66,14 +39,6 @@ export class OrdenRepository {
         })
     }
 
-    /**
-     * Obtener orden específica por ID
-     * Incluye todos los productos de la orden
-     * 
-     * @param {Number} id - ID de la orden
-     * @returns {Promise<Object>} Objeto orden con usuario y productos
-     * @throws {Error} Si la orden no existe
-     */
     async getOrdenById(id) {
         return await sequelize.transaction(async (transaction) => {
             const orden = await Orden.findByPk(id, {
@@ -375,13 +340,6 @@ export class OrdenRepository {
         });
     }
 
-    /**
-     * Eliminar orden
-     * 
-     * @param {Number} id - ID de la orden
-     * @returns {Promise<Boolean>} true si fue eliminada
-     * @throws {Error} Si la orden no existe
-     */
     async deleteOrden(id) {
         return await sequelize.transaction(async (transaction) => {
             const orden = await Orden.findByPk(id, { transaction })

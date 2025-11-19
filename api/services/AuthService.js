@@ -1,46 +1,8 @@
-/**
- * ========================================
- * SERVICE: AUTENTICACION
- * ========================================
- * Capa de lógica de negocio para autenticación
- * Maneja el proceso de login y generación de tokens JWT
- * 
- * Responsabilidades:
- * - Verificar credenciales del usuario
- * - Validar contraseña contra hash
- * - Generar tokens JWT
- * - Gestionar sesiones de usuario
- * 
- * Flujo:
- * 1. Usuario envía correo y contraseña
- * 2. Se busca usuario por correo en la BD
- * 3. Se compara contraseña con hash usando bcrypt
- * 4. Si es válida, se genera token JWT
- * 5. Se retorna token y datos del usuario
- */
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Usuario } from "../models/Usuario.js";
 
 export class AuthService {
-    /**
-     * Realizar login de usuario
-     * Verifica credenciales y genera token JWT
-     * 
-     * @param {String} correo - Email del usuario
-     * @param {String} contraseña - Contraseña en texto plano
-     * 
-     * @returns {Promise<Object>} Objeto con token y datos del usuario
-     * @throws {Error} Si credenciales son inválidas
-     * 
-     * Flujo:
-     * 1. Buscar usuario por correo
-     * 2. Verificar que exista
-     * 3. Comparar contraseña con hash
-     * 4. Generar token JWT con datos del usuario
-     * 5. Retornar token (válido por 1 hora)
-     */
     async login(correo, contraseña) {
         // Buscar usuario por correo en la base de datos
         const user = await Usuario.findOne({ where: { correo } });

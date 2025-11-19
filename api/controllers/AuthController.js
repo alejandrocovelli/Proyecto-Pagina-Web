@@ -1,17 +1,3 @@
-/**
- * ========================================
- * CONTROLLER: AUTENTICACION
- * ========================================
- * Maneja peticiones HTTP de autenticación
- * Procesa login y verifica identidad del usuario
- * 
- * Responsabilidades:
- * - Recibir credenciales de login
- * - Llamar servicio de autenticación
- * - Retornar token JWT
- * - Verificar que el usuario esté autenticado
- */
-
 import { Usuario } from "../models/Usuario.js";
 import { AuthService } from "../services/AuthService.js";
 
@@ -19,31 +5,7 @@ import { AuthService } from "../services/AuthService.js";
 const authService = new AuthService();
 
 export class AuthController {
-    /**
-     * POST /api/auth/login
-     * Realizar login del usuario
-     * Verifica credenciales y retorna token JWT
-     * 
-     * Body requerido:
-     * {
-     *   "correo": "usuario@example.com",
-     *   "contraseña": "Micontraseña123"
-     * }
-     * 
-     * Respuesta exitosa (200):
-     * {
-     *   "success": true,
-     *   "token": "eyJhbGciOiJIUzI1NiIs...",
-     *   "user": { ... }
-     * }
-     * 
-     * Respuesta error (400):
-     * {
-     *   "error": "Usuario no encontrado" o "Contraseña incorrecta"
-     * }
-     * 
-     * @returns {Response} JSON con token y datos del usuario
-     */
+    
     static async login(req, res) {
         try {
             // Extraer credenciales del body
@@ -59,32 +21,6 @@ export class AuthController {
         }
     }
 
-    /**
-     * GET /api/auth/me
-     * Obtener datos del usuario autenticado actual
-     * Requiere token JWT válido en header Authorization
-     * 
-     * Header requerido:
-     * Authorization: Bearer <token>
-     * 
-     * Respuesta exitosa (200):
-     * {
-     *   "mensaje": "Usuario autenticado",
-     *   "user": {
-     *     "idUsuario": 1,
-     *     "tipo": 2
-     *   }
-     * }
-     * 
-     * Respuesta error (401):
-     * {
-     *   "mensaje": "Usuario no autenticado"
-     * }
-     * 
-     * Nota: req.user se llena en AuthMiddleware si el token es válido
-     * 
-     * @returns {Response} JSON con datos del usuario
-     */
     static async me(req, res) {
         try {
             // req.user lo coloca AuthMiddleware al decodificar el JWT

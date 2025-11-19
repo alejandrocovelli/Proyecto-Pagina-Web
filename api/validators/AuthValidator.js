@@ -1,22 +1,6 @@
-/**
- * ========================================
- * VALIDADORES: AUTENTICACION
- * ========================================
- * Define las reglas de validación para datos de login
- * Valida correo y contraseña antes de procesarlos
- */
-
 import { body } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
 
-/**
- * Validador para LOGIN
- * Valida que los datos de login sean válidos
- * 
- * Campos requeridos:
- * - correo: Email válido
- * - contraseña: Mínimo 6 caracteres con letra y número
- */
 export const validateLogin = [
     // Validar campo 'correo'
     body('correo')

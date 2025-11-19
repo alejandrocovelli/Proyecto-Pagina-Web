@@ -1,20 +1,3 @@
-/**
- * ========================================
- * ARCHIVO PRINCIPAL DE LA API
- * ========================================
- * Este archivo configura el servidor Express e inicializa todas las dependencias
- * necesarias para que la API funcione correctamente, incluyendo la conexión a la
- * base de datos y las relaciones entre modelos.
- * 
- * Responsabilidades:
- * - Crear instancia de Express
- * - Configurar middlewares globales (CORS, Morgan, Body Parser)
- * - Establecer las rutas de la API
- * - Configurar manejo de errores global
- * - Inicializar conexión a base de datos
- * - Iniciar el servidor
- */
-
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -26,7 +9,6 @@ import { applyAssociations } from "./models/associations.js";
 // Crear instancia de Express
 const app = express();
 
-// ========== MIDDLEWARES GLOBALES ==========
 
 // Habilitar CORS para permitir peticiones desde diferentes dominios
 app.use(cors());
@@ -47,11 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 // Todas las rutas de la API están prefijadas con /api
 app.use("/api", router);
 
-// ========== MANEJO GLOBAL DE ERRORES ==========
-/**
- * Middleware de error global que captura cualquier error no manejado
- * en las rutas y devuelve una respuesta de error consistente
- */
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ 
@@ -61,15 +38,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-// ========== INICIALIZACIÓN DEL SERVIDOR ==========
-
-// Obtener puerto desde variables de entorno o usar 3000 por defecto
 const PORT = process.env.PORT || 3000;
 
 // Iniciar servidor HTTP
 app.listen(PORT, () => console.log(`🚀 Servidor ejecutándose en http://localhost:${PORT}`));
-
-// ========== INICIALIZACIÓN DE BASE DE DATOS ==========
 
 /**
  * Conectar a la base de datos y aplicar las asociaciones entre modelos

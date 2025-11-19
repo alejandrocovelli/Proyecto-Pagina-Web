@@ -1,31 +1,9 @@
-/**
- * ========================================
- * CONTROLLER: PRODUCTO
- * ========================================
- * Maneja peticiones HTTP relacionadas con productos
- * Orquesta llamadas al servicio y formatea respuestas
- *
- * Responsabilidades:
- * - Recibir peticiones HTTP
- * - Validar datos de entrada
- * - Llamar servicios
- * - Retornar respuestas HTTP apropiadas
- */
-
 import { ProductoService } from "../services/ProductoService.js";
 
 // Crear instancia del servicio
 const productoService = new ProductoService();
 
 export class ProductoController {
-  /**
-   * GET /api/productos
-   * Obtener productos de una categoría
-   *
-   * Body: { idCategoria: Number }
-   *
-   * @returns {Response} JSON con lista de productos
-   */
   static async getProductos(req, res) {
     try {
       const { idCategoria, limit } = req.query;
@@ -51,13 +29,6 @@ export class ProductoController {
     }
   }
 
-  /**
-   * GET /api/productos/:id
-   * Obtener producto específico por ID
-   *
-   * @param {Number} id - ID del producto (parámetro de ruta)
-   * @returns {Response} JSON con datos del producto
-   */
   static async getProductoById(req, res) {
     try {
       const { idProducto } = req.params;
@@ -82,22 +53,6 @@ export class ProductoController {
     }
   }
 
-  /**
-   * POST /api/productos
-   * Crear nuevo producto
-   * Puede incluir imagen que se sube a Cloudinary
-   *
-   * Body:
-   * {
-   *   "nombre": "Producto",
-   *   "precio": 50000,
-   *   "precioMayorista": "40000",
-   *   "idCategoria": 1
-   * }
-   * File (opcional): imagen del producto
-   *
-   * @returns {Response} JSON con producto creado (código 201)
-   */
   static async createProducto(req, res) {
     try {
       const result = await productoService.createProducto(req.body, req.file);
@@ -120,13 +75,6 @@ export class ProductoController {
     }
   }
 
-  /**
-   * PUT /api/productos/:id
-   * Actualizar producto existente
-   *
-   * @param {Number} id - ID del producto (parámetro de ruta)
-   * @returns {Response} JSON con producto actualizado
-   */
   static async updateProducto(req, res) {
     try {
       const { id } = req.params;
@@ -150,13 +98,6 @@ export class ProductoController {
     }
   }
 
-  /**
-   * DELETE /api/productos/:id
-   * Eliminar producto
-   *
-   * @param {Number} id - ID del producto (parámetro de ruta)
-   * @returns {Response} JSON con mensaje de éxito
-   */
   static async deleteProducto(req, res) {
     try {
       const { id } = req.params;

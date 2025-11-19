@@ -1,43 +1,7 @@
-/**
- * ========================================
- * MIDDLEWARE DE AUTENTICACIÓN (JWT)
- * ========================================
- * Verifica que el usuario esté autenticado validando el token JWT
- * Se aplica a rutas protegidas para asegurar que solo usuarios autenticados
- * puedan acceder a ciertos recursos.
- * 
- * Responsabilidades:
- * - Extraer el token del header Authorization
- * - Validar que el token sea válido
- * - Verificar que el token no esté expirado
- * - Inyectar datos del usuario en req.user para usar en rutas
- * - Retornar errores apropiados si el token es inválido
- * 
- * Flujo de autenticación:
- * 1. Cliente envía petición con header: Authorization: "Bearer <token>"
- * 2. Este middleware extrae el token
- * 3. Valida el token con la clave secreta (JWT_SECRET)
- * 4. Si es válido, extrae los datos del usuario y los pone en req.user
- * 5. Si es inválido o expirado, retorna error 401 o 403
- */
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Usuario } from "../models/Usuario.js";
 
-/**
- * Middleware de autenticación JWT
- * Debe usarse en rutas que requieren autenticación
- * 
- * Ejemplo de uso en rutas:
- * router.get("/perfil", AuthMiddleware, controller.getPerfil);
- * 
- * @param {Object} req - Objeto de petición HTTP
- * @param {Object} res - Objeto de respuesta HTTP
- * @param {Function} next - Función para pasar al siguiente middleware
- * 
- * @returns {void} - Llama a next() si el token es válido, o retorna error
- */
 export const AuthMiddleware = (req, res, next) => {
     try {
         // Obtener el header Authorization

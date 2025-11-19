@@ -1,18 +1,6 @@
-/**
- * ========================================
- * VALIDADORES: PRODUCTO
- * ========================================
- * Define reglas de validación para datos de productos
- * Valida nombre, precio, categoría e imagen
- */
-
 import { body, param, query } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
 
-/**
- * Validador para OBTENER PRODUCTOS
- * Valida que idCategoria sea válido (opcional)
- */
 export const validateGetProduct = [
     query('idCategoria')
         .optional()
@@ -23,16 +11,6 @@ export const validateGetProduct = [
         .isInt().withMessage('El limite tiene que ser un número entero')
 ]
 
-/**
- * Validador para CREAR PRODUCTO
- * Valida todos los campos requeridos del producto
- * 
- * Campos requeridos:
- * - nombre: String, 2-100 caracteres
- * - precio: Número entero >= 0
- * - precioMayorista: Número entero >= 0
- * - idCategoria: Número entero (ID de categoría existente)
- */
 export const validateCreateProducto = [
     // Validar nombre del producto
     body('nombre')
@@ -61,10 +39,6 @@ export const validateCreateProducto = [
     }
 ];
 
-/**
- * Validador para ACTUALIZAR PRODUCTO
- * Todos los campos son opcionales
- */
 export const validateUpdateProducto = [
     body('nombre')
         .optional()
@@ -89,10 +63,6 @@ export const validateUpdateProducto = [
     }
 ];
 
-/**
- * Validador para ID DE PRODUCTO
- * Valida el parámetro idProducto en rutas
- */
 export const validateProductoId = [
     param('idProducto')
         .exists().withMessage('El ID de producto es requerido')

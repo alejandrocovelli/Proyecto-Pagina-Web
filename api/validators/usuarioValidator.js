@@ -1,34 +1,7 @@
-/**
- * ========================================
- * VALIDADORES: USUARIO
- * ========================================
- * Define las reglas de validación para los datos de entrada del usuario
- * Usa express-validator para validar y sanitizar datos
- * 
- * Responsabilidades:
- * - Validar que los datos cumplan con los requisitos
- * - Sanitizar datos (limpiar caracteres especiales, etc.)
- * - Retornar errores descriptivos
- * - Ejecutarse ANTES del controlador
- * 
- * Los validadores se aplican como middleware en las rutas
- * Ejemplo: router.post("/", validateCreateUsuario, controller.createUsuario)
- */
-
 import { body, param } from "express-validator";
 import { validationResult } from "express-validator";
 import { validateResult } from "./validatorUtils.js";
 
-/**
- * Validador para CREAR USUARIO
- * Valida que todos los campos requeridos estén presentes y sean válidos
- * 
- * Campos requeridos:
- * - nombre: String, 1-45 caracteres
- * - correo: Email válido, máximo 100 caracteres
- * - contraseña: Mínimo 6 caracteres con letra y número
- * - tipo: Entero 1-3 (1=Admin, 2=Cliente, 3=Mayorista)
- */
 export const validateCreateUsuario = [
     // Validar campo 'nombre'
     body('nombre')
@@ -62,11 +35,6 @@ export const validateCreateUsuario = [
     }
 ];
 
-/**
- * Validador para ACTUALIZAR USUARIO
- * Todos los campos son opcionales
- * Usa .optional() para permitir campos no enviados
- */
 export const validateUpdateUsuario = [
     // Campo 'nombre' (opcional)
     body('nombre')
@@ -98,12 +66,6 @@ export const validateUpdateUsuario = [
     }
 ];
 
-/**
- * Validador para ID DE USUARIO (en parámetros de ruta)
- * Valida el parámetro idUsuario cuando se busca/actualiza/elimina un usuario
- * 
- * @param {Number} idUsuario - ID del usuario en la ruta (/usuarios/:idUsuario)
- */
 export const validateUsuarioId = [
     // Validar parámetro 'idUsuario'
     param('idUsuario')

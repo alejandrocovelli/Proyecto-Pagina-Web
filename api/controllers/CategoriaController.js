@@ -1,28 +1,9 @@
-/**
- * ========================================
- * CONTROLLER: CATEGORIA
- * ========================================
- * Maneja peticiones HTTP relacionadas con categorías
- * Procesa solicitudes y retorna respuestas JSON
- * 
- * Responsabilidades:
- * - Recibir y procesar peticiones HTTP
- * - Delegar lógica al servicio
- * - Retornar respuestas con códigos HTTP apropiados
- */
-
 import { CategoriaService } from "../services/CategoriaService.js";
 
 // Crear instancia del servicio
 const categoriaService = new CategoriaService();
 
 export class CategoriaController {
-    /**
-     * GET /api/categorias
-     * Obtener lista de todas las categorías
-     * 
-     * @returns {Response} JSON con array de categorías (código 200)
-     */
     static async getCategorias(req, res) {
         try {
             const result = await categoriaService.getCategorias()
@@ -46,13 +27,6 @@ export class CategoriaController {
         }
     }
 
-    /**
-     * GET /api/categorias/:id
-     * Obtener categoría específica por ID
-     * 
-     * @param {Number} id - ID de la categoría (parámetro de ruta)
-     * @returns {Response} JSON con datos de la categoría
-     */
     static async getCategoriaById(req, res) {
         try {
             const { id } = req.params;
@@ -76,17 +50,6 @@ export class CategoriaController {
         }
     }
 
-    /**
-     * POST /api/categorias
-     * Crear nueva categoría
-     * 
-     * Body requerido:
-     * {
-     *   "nombre": "Nombre de la categoría"
-     * }
-     * 
-     * @returns {Response} JSON con categoría creada (código 201)
-     */
     static async createCategoria(req, res) {
         try {
             const result = await categoriaService.createCategoria(req.body)
@@ -109,18 +72,6 @@ export class CategoriaController {
         }
     }
 
-    /**
-     * PUT /api/categorias/:id
-     * Actualizar categoría existente
-     * 
-     * Body (opcional):
-     * {
-     *   "nombre": "Nuevo nombre"
-     * }
-     * 
-     * @param {Number} id - ID de la categoría (parámetro de ruta)
-     * @returns {Response} JSON con categoría actualizada
-     */
     static async updateCategoria(req, res) {
         try {
             const { id } = req.params;
@@ -144,13 +95,6 @@ export class CategoriaController {
         }
     }
 
-    /**
-     * DELETE /api/categorias/:id
-     * Eliminar categoría
-     * 
-     * @param {Number} id - ID de la categoría (parámetro de ruta)
-     * @returns {Response} JSON con mensaje de éxito
-     */
     static async deleteCategoria(req, res) {
         try {
             const { id } = req.params;
