@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { User, Handbag, Gem, House } from "lucide-react";
+import { User, Handbag, Gem, House, ShoppingCart } from "lucide-react";
 
 export default function Header(currentPage) {
     return (
@@ -18,9 +18,9 @@ export default function Header(currentPage) {
                         <Handbag size={25}/>
                         <span className="text-lg font-medium">Catalogo</span>
                     </Link>
-                    <Link to="/" className="flex flex-col items-center hover:opacity-80 transition">
-                        <Gem size={25}/>
-                        <span className="text-lg font-medium">Servicios</span>
+                    <Link to="/carrito" className="flex flex-col items-center hover:opacity-80 transition">
+                        <ShoppingCart size={25}/>
+                        <span className="text-lg font-medium">Carrito</span>
                     </Link>
                     <Link to="/usuario" className="flex flex-col items-center hover:opacity-80 transition">
                         <User size={25}/>
