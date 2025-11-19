@@ -3,15 +3,18 @@ import { useParams } from "react-router-dom";
 import Header from "../components/header";
 import { Heart, Truck } from "lucide-react";
 import { getProductoById } from "../services/ProductoService";
+import { crearOrdenService, getCarrito, updateOrdenService } from "../services/CarritoService";
+import { useAuth } from "../hooks/useAuth";
 
 
 export default function Producto() {
   const { idProducto  } = useParams();
+  const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [product, setProduct] = useState(null);
+  const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  console.log(producto);
   useEffect(() => {
     console.log("Cargando producto con ID:", idProducto );
     const cargarProducto = async () => {
@@ -19,7 +22,7 @@ export default function Producto() {
         const data = await getProductoById(Number(idProducto));
         console.log("PRODUCTO:", data.data);
 
-        setProduct(data.data);
+        setProducto(data.data);
       } catch (error) {
         console.error("Error cargando producto:", error);
       } finally {
@@ -30,6 +33,34 @@ export default function Producto() {
     cargarProducto();
   }, [idProducto ]);
 
+  const handleAddToCart = async () => {
+    try {
+      const carrito = await getCarrito(user.idUsuario);
+      console.log(carrito);
+      const ordenData = {
+        productos: [
+          {
+            idProducto: producto?.idProducto,
+            cantidad: quantity,
+          },
+        ],
+      };
+      if(carrito && carrito.result.data.idOrden){
+        await updateOrdenService(carrito.result.data.idOrden, ordenData);
+      } else {
+        console.log("holaaa");
+        await crearOrdenService({
+          ...ordenData,
+          estado: 1, 
+          idUsuario: user.idUsuario,
+        });
+      }
+      
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error);
+    }
+  }
+
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center text-xl text-gray-500">
@@ -38,7 +69,7 @@ export default function Producto() {
     );
   }
 
-  if (!product) {
+  if (!producto) {
     return (
       <div className="w-full h-screen flex items-center justify-center text-xl text-gray-500">
         Producto no encontrado
@@ -53,7 +84,7 @@ export default function Producto() {
         <div className="max-w-7xl h-full mx-auto flex flex-col min-h-0">
           {/* Breadcrumb */}
           <div className="text-gray-600 font-medium mb-8 bg-white p-4 rounded-lg">
-            {product?.categoria?.nombre}/{product?.nombre}
+            {producto?.categoria?.nombre}/{producto?.nombre}
           </div>
 
           {/* Product Detail: left photo and right info (title, envio box, price/controls) */}
@@ -63,8 +94,8 @@ export default function Producto() {
             <div className="md:col-span-2 row-span-2">
               <div className="bg-white rounded-lg p-6 flex items-center justify-center h-full">
                 <img
-                  src={product?.foto || "../public/default-ui-image-placeholder.webp"}
-                  alt={product?.nombre}
+                  src={producto?.foto || "../public/default-ui-image-placeholder.webp"}
+                  alt={producto?.nombre}
                   className="rounded-lg shadow-sm max-h-80 md:max-h-96 max-w-full object-contain"
                 />
               </div>
@@ -75,7 +106,7 @@ export default function Producto() {
               {/* Title */}
               <div className="pb-4 px-6 border-b-8 border-gray-100">
                 <h1 className="text-3xl font-bold text-customPurple1">
-                  {product?.nombre}
+                  {producto?.nombre}
                 </h1>
               </div>
 
@@ -94,10 +125,10 @@ export default function Producto() {
                   <div className="flex items-center gap-4 mb-4">
                     <div className="text-center">
                       <span className="text-4xl font-bold text-customPurple1">
-                        ${product?.precioMayorista.toLocaleString()}
+                        ${producto?.precioMayorista.toLocaleString()}
                       </span>
                       <div className="text-sm text-gray-400 line-through">
-                        ${product?.precio.toLocaleString()}
+                        ${producto?.precio.toLocaleString()}
                       </div>
                     </div>
 
@@ -137,7 +168,7 @@ export default function Producto() {
                   </div>
 
                   <div className="flex flex-col gap-3 mt-10">
-                    <button className="w-48 bg-customPurple1 hover:bg-purple-600 text-white font-bold py-3 rounded-lg transition">
+                    <button onClick={() => handleAddToCart()}  className="w-48 bg-customPurple1 hover:bg-purple-600 text-white font-bold py-3 rounded-lg transition">
                       Agregar al carrito
                     </button>
                   </div>

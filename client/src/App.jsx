@@ -7,6 +7,7 @@ import Usuario from "./pages/usuario.jsx"
 import Producto from "./pages/producto.js"
 import { RequireAuth } from "./utils/RequireAuth.jsx"
 import { AuthProvider } from "./context/AuthContext.jsx"
+import Carrito from "./pages/carrito.jsx"
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
           <Route path="/product/:idProducto" element={
             <RequireAuth>
               <Producto />
+            </RequireAuth>
+          } />
+          <Route path="/carrito" element={
+            <RequireAuth>
+              <Carrito />
             </RequireAuth>
           } />
           <Route path="/usuario" element={

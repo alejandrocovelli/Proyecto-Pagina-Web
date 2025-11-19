@@ -87,6 +87,22 @@ export class OrdenController {
         }
     }
 
+    static async getCarrito(req, res) {
+        try {
+            const { idUsuario } = req.params;
+            const result = await ordenService.getCarrito(idUsuario)
+            if (result && result.data === null) {
+                return res.status(404).json({ mensaje: "Carrito no encontrado", result: null });
+            }
+            res.status(200).json({mensaje: "Carrito encontrado", result})
+        } catch (error) {
+            console.error("Error en getCarrito:", error);
+            return res.status(500).json({
+                error: "Error interno del servidor",
+            });
+        }
+    }
+
     /**
      * Crear nueva orden
      * 
@@ -124,6 +140,7 @@ export class OrdenController {
      */
     static async createOrden(req, res) {
         try {
+            console.log(req.body);
             const result = await ordenService.createOrden(req.body)
             if(!result) {
                 return res.status(400).json({ error: "Error al crear la orden" })
@@ -162,8 +179,8 @@ export class OrdenController {
      */
     static async updateOrden(req, res) {
         try {
-            const { id } = req.params;
-            const result = await ordenService.updateOrden(id, req.body)
+            const { idOrden } = req.params;
+            const result = await ordenService.updateOrden(idOrden, req.body)
             if(!result) {
                 return res.status(404).json({ error: "Orden no encontrada" })
             }

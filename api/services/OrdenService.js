@@ -46,6 +46,21 @@ export class OrdenService {
         return { success: true, data: orden };
     }
 
+    async getCarrito(idUsuario) {
+        try {
+            const carrito = await this.ordenRepository.getCarrito(idUsuario);
+            console.log(carrito);
+            return { success: true, data: carrito };
+        } catch (error) {
+            // Si el repositorio indicó que no existe, devolvemos el objeto solicitado
+            if (error && String(error.message).toLowerCase().includes('carrito no encontrado')) {
+                return { mensaje: "Carrito no encontrado", data: null };
+            }
+            // Re-lanzar otros errores para que se manejen como 500
+            throw error;
+        }
+    }
+
     /**
      * Crear nueva orden
      * 

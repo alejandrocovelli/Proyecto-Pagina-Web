@@ -23,7 +23,7 @@
 
 import { Router } from "express"
 import { OrdenController } from "../controllers/OrdenController.js"
-import { validateCreateOrden, validateOrdenId, validateUpdateOrden } from "../validators/ordenValidator.js";
+import { validateCreateOrden, validateOrdenId, validateUpdateOrden, validateUsuarioId } from "../validators/ordenValidator.js";
 
 const router = Router()
 
@@ -56,6 +56,8 @@ router.get("/", OrdenController.getOrdenes)
  * Middleware: validateOrdenId - Valida que ID sea entero > 0
  */
 router.get("/:id", validateOrdenId, OrdenController.getOrdenById)
+
+router.get("/carrito/:idUsuario", validateUsuarioId, OrdenController.getCarrito)
 
 /**
  * POST /api/ordenes
@@ -118,7 +120,7 @@ router.post("/", validateCreateOrden, OrdenController.createOrden)
  * 
  * Uso típico: Cambiar estado de la orden (pendiente → en proceso → enviado)
  */
-router.put("/:id", [...validateOrdenId, ...validateUpdateOrden], OrdenController.updateOrden)
+router.put("/:idOrden", [...validateOrdenId, ...validateUpdateOrden], OrdenController.updateOrden)
 
 /**
  * DELETE /api/ordenes/:id

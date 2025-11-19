@@ -81,7 +81,7 @@ Orden.init({
      */
     idDireccion: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Direccion,
             key: 'idDireccion'

@@ -64,10 +64,6 @@ export const validateCreateOrden = [
         .exists().withMessage('El ID de usuario es requerido')
         .isInt().withMessage('El ID de usuario debe ser un número entero'),
     
-    body('idDireccion')
-        .exists().withMessage('El ID de dirección es requerido')
-        .isInt().withMessage('El ID de dirección debe ser un número entero'),
-    
     // Middleware de verificación de errores
     (req, res, next) => {
         validateResult(req, res, next);
@@ -94,6 +90,21 @@ export const validateUpdateOrden = [
         .optional()
         .isInt({ min: 1, max: 4 }).withMessage('El estado debe ser 1 (pendiente), 2 (en proceso), 3 (cancelado) o 4 (aceptado)'),
     
+    body('productos')
+        .optional()
+        .isArray().withMessage('Los productos deben ser un array')
+        .custom(arr => Array.isArray(arr) && arr.length > 0).withMessage('Si envía productos, el array no puede estar vacío'),
+
+    body('productos.*.idProducto')
+        .if(body('productos').exists()) // sólo validar si productos fue enviado
+        .exists().withMessage('El ID del producto es requerido')
+        .isInt({ min: 1 }).withMessage('El ID del producto debe ser un entero positivo'),
+
+    body('productos.*.cantidad')
+        .if(body('productos').exists())
+        .exists().withMessage('La cantidad es requerida')
+        .isInt({ min: 1 }).withMessage('La cantidad debe ser un entero positivo'),
+
     // Total es opcional pero si se proporciona debe ser >= 0
     body('totalPago')
         .optional()
@@ -120,6 +131,15 @@ export const validateOrdenId = [
     param('idOrden')
         .exists().withMessage('El ID de orden es requerido')
         .isInt({ min: 1 }).withMessage('El ID de orden debe ser un número entero positivo'),
+    (req, res, next) => {
+        validateResult(req, res, next);
+    }
+];
+
+export const validateUsuarioId = [
+    param('idUsuario')
+        .exists().withMessage('El ID del usuario es requerido')
+        .isInt({ min: 1 }).withMessage('El ID del usuario debe ser un número entero positivo'),
     (req, res, next) => {
         validateResult(req, res, next);
     }

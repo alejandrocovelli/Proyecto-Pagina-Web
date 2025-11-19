@@ -118,7 +118,6 @@ export default function Categorias() {
                                     />
 
                                 ))}
-                                {console.log(productos)}
                             </div>
                         </div>
                         <ModalCrear
