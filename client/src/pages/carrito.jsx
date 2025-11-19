@@ -4,10 +4,10 @@ import BarraLateral from "../components/BarraLateral";
 import ProductoCard from "../components/ProductoCard";
 import { useEffect, useState } from "react";
 import ModalCrear from "../components/ModalCrear";
-import { useNavigate, } from "react-router-dom";
 import CarritoItem from "../components/CarritoItem";
 import { crearDireccionService, deleteOrdenProducto, getCarrito, updateOrdenProducto, updateOrdenService } from "../services/CarritoService";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from "../context/ToastContext.jsx";
 import fondo from "../../public/Group 69.png"
 import ModalDireccion from "../components/ModalDireccion";
 
@@ -17,8 +17,9 @@ export default function Carrito() {
     const [loading, setLoading] = useState(false);
     const [openDireccion, setOpenDireccion] = useState(false);
     const { user } = useAuth();
+    const { showToast } = useToast();
 
-    const navigate = useNavigate()
+    // (no navigation needed here)
 
     const handleOpenPago = () => {
         setOpenDireccion(true);
@@ -44,6 +45,7 @@ export default function Carrito() {
                 if (orderMeta?.idOrden) {
                     await updateOrdenService(orderMeta.idOrden, { estado: 2 }); // 2 = en proceso
                 }
+                showToast({ type: 'success', message: 'Dirección seleccionada. Compra realizada.' })
                 setOpenDireccion(false);
                 return;
             }
@@ -54,6 +56,7 @@ export default function Carrito() {
                 if (orderMeta?.idOrden) {
                     await updateOrdenService(orderMeta.idOrden, { estado: 2 }); // 2 = en proceso
                 }
+                showToast({ type: 'success', message: 'Dirección creada. Compra realizada.' })
                 setOpenDireccion(false);
                 return;
             }
@@ -105,6 +108,7 @@ export default function Carrito() {
             console.error("Error al cargar el carrito:", error);
             setCarrito([]);
             setOrderMeta(null);
+            showToast({ type: 'error', message: 'No se pudo cargar el carrito' })
         } finally {
             setLoading(false);
         }
@@ -135,8 +139,10 @@ export default function Carrito() {
         try {
             await updateOrdenProducto(op.idOrdenProducto, { cantidad: Number(nuevaCantidad) });
             await cargarCarrito();
+            showToast({ type: 'success', message: 'Cantidad actualizada' })
         } catch (error) {
             console.error("Error actualizando cantidad:", error);
+            showToast({ type: 'error', message: 'Error actualizando cantidad' })
         } finally {
             setLoading(false);
         }
@@ -151,8 +157,10 @@ export default function Carrito() {
         try {
             await deleteOrdenProducto(op.idOrdenProducto);
             await cargarCarrito();
+            showToast({ type: 'success', message: 'Producto eliminado del carrito' })
         } catch (error) {
             console.error("Error al eliminar producto del carrito:", error);
+            showToast({ type: 'error', message: 'Error eliminando producto' })
             return;
         } finally {
             setLoading(false);

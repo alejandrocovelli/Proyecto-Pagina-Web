@@ -7,12 +7,14 @@ import Usuario from "./pages/usuario.jsx"
 import Producto from "./pages/producto.js"
 import { RequireAuth } from "./utils/RequireAuth.jsx"
 import { AuthProvider } from "./context/AuthContext.jsx"
+import { ToastProvider } from "./context/ToastContext.jsx"
 import Carrito from "./pages/carrito.jsx"
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <ToastProvider>
+      <AuthProvider>
+        <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={
@@ -46,8 +48,9 @@ function App() {
             </RequireAuth>
           } />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+        </BrowserRouter>
+      </AuthProvider>
+    </ToastProvider>
   )
 }
 

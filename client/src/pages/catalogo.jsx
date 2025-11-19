@@ -5,6 +5,7 @@ import { getCategoriasService } from "../services/ProductoService";
 import ModalCrearCategoria from "../components/ModalCrearCategoria";
 import { crearCategoriaService } from "../services/ProductoService";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from "../context/ToastContext.jsx";
 import fondo from "../../public/Group 69.png"
 
 export default function Catalogo() {
@@ -12,6 +13,7 @@ export default function Catalogo() {
     const [loading, setLoading] = useState(false);
     const [openCategoriaModal, setOpenCategoriaModal] = useState(false);
     const { user } = useAuth();
+    const { showToast } = useToast();
 
     const getCategorias = async () => {
         setLoading(true);
@@ -20,6 +22,7 @@ export default function Catalogo() {
             setCategorias(response.data);
         } catch (error) {
             console.error("Error al cargar categorias:", error);
+            showToast({ type: 'error', message: 'Error al cargar las categorías' });
         } finally {
             setLoading(false);
         }
@@ -34,10 +37,12 @@ export default function Catalogo() {
             const data = await crearCategoriaService(nuevaCategoria);
             // consola para debugging
             console.log("Categoria creada:", data);
+            showToast({ type: 'success', message: 'Categoría creada exitosamente' });
             // recargar listado de categorias
             await getCategorias();
         } catch (error) {
             console.error("Error creando categoría:", error);
+            showToast({ type: 'error', message: 'Error al crear la categoría' });
         }
     };
 console.log(user);

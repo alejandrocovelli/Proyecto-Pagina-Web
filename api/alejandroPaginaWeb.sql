@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `paperUniverse`.`orden` (
   `estado` INT NOT NULL,
   `totalPago` INT NOT NULL,
   `idUsuario` INT NOT NULL,
-  `idDireccion` INT NOT NULL,
+  `idDireccion` INT NULL,
   PRIMARY KEY (`idOrden`),
   INDEX `fk_orden_usuario1_idx` (`idUsuario` ASC) VISIBLE,
   INDEX `fk_orden_direccion1_idx` (`idDireccion` ASC) VISIBLE,

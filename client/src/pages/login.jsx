@@ -38,22 +38,22 @@ export default function Login() {
     const isLogin = activeTab === "Inicio de Sesion"
 
     return (
-        <div className="w-full min-h-screen flex flex-col">
+        <div className="w-full min-h-screen flex flex-col bg-customBlue2">
             <Header currentPage={isLogin ? "Login" : "Registro"} />
 
-            <div style={{ backgroundImage: `url(${fondo})` }} className={`relative flex-1 bg-customBlue2 bg-cover bg-center w-screen flex flex-col items-center overflow-hidden ${isLogin ? 'justify-start' : 'justify-end'}`}>
+            <div style={{ backgroundImage: `url(${fondo})` }} className={`relative flex-1 bg-cover bg-center w-full flex flex-col items-center overflow-y-auto ${isLogin ? 'justify-center' : 'justify-end'}`}>
 
-                <div className={`z-10 text-center ${isLogin ? 'block' : 'hidden'}`}>
+                <div className={`z-10 text-center mt-4 md:mt-8 ${isLogin ? 'block' : 'hidden'}`}>
                     <img src="../../logoPaperUniverse.svg" alt="logo" className="hidden md:block h-40 md:h-60 mx-auto" />
                 </div>
 
-                <div className={`transition-all duration-300 relative z-10 bg-blue-300/90 p-6 mx-4 ${isLogin ? 'rounded-3xl w-[60vw] h-[50vh]' : 'rounded-t-3xl w-[80vw] h-[80vh]'}`}>
+                <div className={`transition-all duration-300 relative z-20 bg-blue-300/90 p-6 shadow-xl mx-auto w-[90vw] sm:w-[80vw] md:w-[60vw] lg:w-[40vw] ${isLogin ? 'rounded-3xl' : 'rounded-t-3xl'} min-h-[300px] max-h-[85vh] overflow-y-auto`}>
                     {/* Tabs */}
                     <div className="mb-4">
                         <TabNavegacion tabs={["Inicio de Sesion", "Registrarse"]} activeTab={activeTab} onChange={setActiveTab} />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4 px-6">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Nombre solo en registro */}
                         {!isLogin && (
                             <div>
@@ -62,19 +62,19 @@ export default function Login() {
                                     type="text"
                                     value={nombre}
                                     onChange={(e) => setNombre(e.target.value)}
-                                    className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
+                                    className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:ring-customPurple1 transition"
                                     placeholder="Tu nombre"
                                 />
                             </div>
                         )}
 
                         <div>
-                            <label className="text-white text-sm block mb-2">Correo electronico</label>
+                            <label className="text-white text-sm block mb-2">Correo electrónico</label>
                             <input
                                 type="correo"
                                 value={correo}
                                 onChange={(e) => setCorreo(e.target.value)}
-                                className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
+                                className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:ring-customPurple1 transition"
                                 placeholder="tu@gmail.com"
                             />
                         </div>
@@ -85,7 +85,7 @@ export default function Login() {
                                 type="password"
                                 value={contraseña}
                                 onChange={(e) => setContraseña(e.target.value)}
-                                className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
+                                className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:ring-customPurple1 transition"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -98,7 +98,7 @@ export default function Login() {
                                     name="tipo"
                                     value={tipo}
                                     onChange={(e) => setTipo(e.target.value)}
-                                    className="w-full px-4 py-2 rounded-full bg-white text-gray-800 border-2 border-customPurple1 focus:border-customPurple1 focus:ring-2 focus:ring-customPurple1 outline-none transition"
+                                    className="w-full bg-white text-gray-800 rounded-full px-4 py-2 border-2 border-customPurple1 focus:ring-customPurple1 transition"
                                 >
                                     <option value="">Seleccione un tipo...</option>
                                     <option value={1}>Administrador</option>
@@ -112,12 +112,12 @@ export default function Login() {
                         {isLogin ? (
                             <div></div>
                         ) : (
-                            <p className="text-white text-sm">Al registrarte aceptas nuestros términos y condiciones.</p>
+                            <p className="text-white text-xs text-center pt-2">Al registrarte aceptas nuestros términos y condiciones.</p>
                         )}
 
                         <button
                             type="submit"
-                            className={`w-40 mx-auto block bg-customPurple1 hover:bg-purple-600 text-white font-bold py-2 rounded-full transition mt-6`}
+                            className={`w-44 mx-auto block bg-customPurple1 hover:bg-purple-600 text-white font-bold py-2 rounded-full transition mt-6`}
                         >
                             {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
                         </button>
