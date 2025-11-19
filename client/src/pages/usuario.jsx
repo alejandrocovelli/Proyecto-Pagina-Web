@@ -29,7 +29,7 @@ export default function Usuario() {
                     <div className="max-w-5xl relative h-full z-10 bg-customBlue3 px-24 py-10 rounded-t-3xl w-[80vw] mt-auto">
                         {/* User Card */}
                         <div className="mb-8">
-                            <UsuarioCard name={user.nombre} email={user.correo} avatarText="yo" isPremium />
+                            <UsuarioCard name={user.nombre} email={user.correo} avatarText={user.nombre.slice(0, 2).toUpperCase()} isPremium />
                         </div>
 
                         {/* Actions Grid */}

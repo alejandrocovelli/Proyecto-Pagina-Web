@@ -55,13 +55,13 @@ export default function Carrito() {
                     await updateOrdenService(orderMeta.idOrden, { estado: 2 }); // 2 = en proceso
                 }
                 setOpenDireccion(false);
-                navigate("/ordenes");
                 return;
             }
 
         } catch (error) {
             console.error("Error procesando la dirección:", error);
         } finally {
+            await cargarCarrito();
             setLoading(false);
         }
     };
