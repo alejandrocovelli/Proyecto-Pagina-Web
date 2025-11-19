@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CategoriaCard from "../components/CategoriaCard";
-import Header from "../components/header";
+import Header from "../components/Header";
 import { getCategoriasService } from "../services/ProductoService";
 import ModalCrearCategoria from "../components/ModalCrearCategoria";
 import { crearCategoriaService } from "../services/ProductoService";

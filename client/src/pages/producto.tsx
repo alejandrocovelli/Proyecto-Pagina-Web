@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/header";
+import Header from "../components/Header";
 import { Heart, Truck } from "lucide-react";
 import { getProductoById } from "../services/ProductoService";
 import { crearOrdenService, getCarrito, updateOrdenService } from "../services/CarritoService";

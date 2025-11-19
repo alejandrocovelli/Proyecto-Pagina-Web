@@ -1,4 +1,4 @@
-import Header from "../components/header"
+import Header from "../components/Header"
 import UsuarioCard from "../components/UsuarioCard"
 import { User, Gem, CreditCard, DoorClosed, Search, MapPin } from "lucide-react"
 import { useAuth } from "../hooks/useAuth";

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Header from "../components/header"
+import Header from "../components/Header"
 import TabNavegacion from "../components/TabNavegacion"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth.js"

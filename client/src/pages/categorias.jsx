@@ -1,5 +1,5 @@
 //import { useParams } from "react-router-dom"
-import Header from "../components/header";
+import Header from "../components/Header";
 import BarraLateral from "../components/BarraLateral";
 import ProductoCard from "../components/ProductoCard";
 import {
