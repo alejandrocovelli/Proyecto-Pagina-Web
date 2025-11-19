@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import CategoriaCard from "../components/CategoriaCard";
 import Header from "../components/header";
 import { getCategoriasService } from "../services/ProductoService";
+import ModalCrearCategoria from "../components/ModalCrearCategoria";
+import { crearCategoriaService } from "../services/ProductoService";
 
 export default function Catalogo() {
     const [categorias, setCategorias] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [openCategoriaModal, setOpenCategoriaModal] = useState(false);
 
     const getCategorias = async () => {
         setLoading(true);
@@ -22,6 +25,18 @@ export default function Catalogo() {
     useEffect(() => {
         getCategorias();
     }, [])
+
+    const handleCrearCategoria = async (nuevaCategoria) => {
+        try {
+            const data = await crearCategoriaService(nuevaCategoria);
+            // consola para debugging
+            console.log("Categoria creada:", data);
+            // recargar listado de categorias
+            await getCategorias();
+        } catch (error) {
+            console.error("Error creando categoría:", error);
+        }
+    };
 
     /*const categorias = [
         {
@@ -59,7 +74,13 @@ export default function Catalogo() {
             </div>
 
             {/* Categorias Grid */}
-            <section className="py-12 px-8 bg-gradient-to-b from-white to-gray-50">
+            <section className="relative py-12 px-8 bg-gradient-to-b from-white to-gray-50">
+                <button
+                    className="absolute right-5 top-2 bg-customPurple1 text-white px-5 py-2 rounded text-sm hover:bg-purple-600 transition"
+                    onClick={() => setOpenCategoriaModal(true)}
+                >
+                    +
+                </button>
                 <div className="relative">
                     <div className="max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-40">
@@ -73,6 +94,11 @@ export default function Catalogo() {
                         </div>
                     </div>
                 </div>
+                <ModalCrearCategoria
+                    open={openCategoriaModal}
+                    setOpen={setOpenCategoriaModal}
+                    onSubmit={handleCrearCategoria}
+                />
             </section>
         </div>
     )

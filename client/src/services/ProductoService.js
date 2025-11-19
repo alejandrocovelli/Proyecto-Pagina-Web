@@ -1,5 +1,14 @@
 import axiosClient from "./axios.js";
 
+export const crearCategoriaService = async ({ nombre } = {}) => {
+    try {
+        const res = await axiosClient.post("/categorias", { nombre });
+        return res.data;
+    } catch ( e ) {
+        throw new Error("Error al crear la categoría");
+    }
+}
+
 export const crearProductoService = async (formData) => {
     try {
         const res = await axiosClient.post("/productos", formData, {
