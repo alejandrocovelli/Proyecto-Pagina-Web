@@ -15,9 +15,9 @@ export default function CarritoItem({
             </div>
 
             <div className="flex-1">
-                <h3 className="text-lg font-semibold text-purple-600 mb-2">{title}</h3>
+                <h3 className="text-lg font-semibold text-customPurple1 mb-2">{title}</h3>
                 <p className="text-gray-600 text-sm mb-4">
-                    ${price.toLocaleString()} x {quantity} = <span className="font-bold text-purple-600">${subtotal.toLocaleString()}</span>
+                    ${price.toLocaleString()} x {quantity} = <span className="font-bold text-customPurple1">${subtotal.toLocaleString()}</span>
                 </p>
 
                 <div className="flex items-center gap-4">
@@ -47,7 +47,7 @@ export default function CarritoItem({
             </div>
 
             <div className="text-right">
-                <p className="text-2xl font-bold text-purple-600">${subtotal.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-customPurple1">${subtotal.toLocaleString()}</p>
             </div>
         </div>
     )

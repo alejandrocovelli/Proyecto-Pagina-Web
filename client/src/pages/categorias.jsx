@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ModalCrear from "../components/ModalCrear";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import fondo from "../../public/Group 69.png"
 
 export default function Categorias() {
     const [sidebarSections, setSidebarSections] = useState([]);
@@ -93,7 +94,7 @@ export default function Categorias() {
                     <BarraLateral sections={sidebarSections} onClick={handleCategoriaClick}/>
 
                     {/* Main Content */}
-                    <main className="flex-1 relative z-10 px-20">
+                    <main style={{ backgroundImage: `url(${fondo})` }} className="flex-1 bg-customBlue2 bg-cover bg-center w- relative z-10 px-20">
                         {user && user.tipo == 1 && <button
                             className="absolute right-5 top-5 bg-customPurple1 text-white px-5 py-2 rounded text-sm hover:bg-purple-600 transition"
                             onClick={() => setOpenModal(true)}

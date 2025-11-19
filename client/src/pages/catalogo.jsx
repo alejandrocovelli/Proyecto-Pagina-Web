@@ -5,6 +5,7 @@ import { getCategoriasService } from "../services/ProductoService";
 import ModalCrearCategoria from "../components/ModalCrearCategoria";
 import { crearCategoriaService } from "../services/ProductoService";
 import { useAuth } from "../hooks/useAuth";
+import fondo from "../../public/Group 69.png"
 
 export default function Catalogo() {
     const [categorias, setCategorias] = useState([]);
@@ -76,7 +77,7 @@ console.log(user);
             </div>
 
             {/* Categorias Grid */}
-            <section className="relative py-12 px-8 bg-gradient-to-b from-white to-gray-50">
+            <section style={{ backgroundImage: `url(${fondo})` }} className="relative py-12 px-8 bg-customBlue2 bg-cover bg-center w-screen">
                 {user && user.tipo == 1 && <button
                     className="absolute right-5 top-2 bg-customPurple1 text-white px-5 py-2 rounded text-sm hover:bg-purple-600 transition"
                     onClick={() => setOpenCategoriaModal(true)}

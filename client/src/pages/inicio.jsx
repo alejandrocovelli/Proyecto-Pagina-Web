@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/header"
 import ProductoCard from "../components/ProductoCard"
 import { getProductosService } from "../services/ProductoService";
+import fondo from "../../public/Group 69.png"
 
 export default function Inicio() {
     const [productos, setProductos] = useState([]);
@@ -74,7 +75,7 @@ export default function Inicio() {
             </div>
 
             {/* Best Sellers Section */}
-            <section className="pb-12 bg-gradient-to-b from-white to-gray-50">
+            <section style={{ backgroundImage: `url(${fondo})` }} className="pb-12 bg-customBlue2 bg-cover bg-center w-screen">
                 <div className="relative">
                     <div className="flex justify-center items-center py-4 mb-4 bg-customPurple1">
                         <h2 className="text-3xl font-bold text-white text-center">💖 Lo Mas Vendido</h2>

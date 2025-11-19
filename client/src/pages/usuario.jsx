@@ -3,7 +3,7 @@ import UsuarioCard from "../components/UsuarioCard"
 import { User, Gem, CreditCard, DoorClosed, Search, MapPin } from "lucide-react"
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
-
+import fondo from "../../public/Group 69.png"
 
 export default function Usuario() {
     const { user, logoutHandler } = useAuth();
@@ -25,7 +25,7 @@ export default function Usuario() {
         <div className="w-full min-h-screen flex flex-col">
             <Header currentPage="Usuario" />
 
-            <div className="relative flex-1 pt-6 px-4 overflow-hidden flex flex-col items-center h-full">
+            <div style={{ backgroundImage: `url(${fondo})` }} className="relative bg-customBlue2 bg-cover bg-center w-screen flex-1 pt-6 px-4 overflow-hidden flex flex-col items-center h-full">
                     <div className="max-w-5xl relative h-full z-10 bg-customBlue3 px-24 py-10 rounded-t-3xl w-[80vw] mt-auto">
                         {/* User Card */}
                         <div className="mb-8">

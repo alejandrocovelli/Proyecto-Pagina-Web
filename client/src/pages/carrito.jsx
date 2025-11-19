@@ -8,6 +8,7 @@ import { useNavigate, } from "react-router-dom";
 import CarritoItem from "../components/CarritoItem";
 import { getCarrito, updateOrdenService } from "../services/CarritoService";
 import { useAuth } from "../hooks/useAuth";
+import fondo from "../../public/Group 69.png"
 
 export default function Carrito() {
     const [quantity, setQuantity] = useState(1)
@@ -145,9 +146,9 @@ export default function Carrito() {
         <div className="w-full">
             <Header currentPage="Carrito" />
 
-            <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12 px-4">
+            <div style={{ backgroundImage: `url(${fondo})` }} className="min-h-screen bg-customBlue2 bg-cover bg-center w-screen from-white to-gray-50 py-12 px-4">
                 <div className="max-w-6xl mx-auto">
-                    <h1 className="text-4xl font-bold text-purple-600 mb-8">Mi Carrito</h1>
+                    <h1 className="text-4xl font-bold text-customPurple1 mb-8">Mi Carrito</h1>
 
                     {loading ? (
                         <div className="p-8 text-center">Cargando carrito...</div>
@@ -174,7 +175,7 @@ export default function Carrito() {
 
                             <div className="lg:col-span-1">
                                 <div className="bg-white rounded-lg shadow-md p-6 sticky top-6 space-y-4">
-                                    <h2 className="text-xl font-bold text-purple-600 mb-6">Resumen del Carrito</h2>
+                                    <h2 className="text-xl font-bold text-customPurple1 mb-6">Resumen del Carrito</h2>
 
                                     <div className="space-y-3 border-b border-gray-200 pb-4">
                                         {cart.map((item) => (
@@ -208,12 +209,12 @@ export default function Carrito() {
                                     <div className="border-t border-gray-200 pt-4">
                                         <div className="flex justify-between items-center mb-6">
                                             <span className="text-lg font-semibold text-gray-800">Total</span>
-                                            <span className="text-3xl font-bold text-purple-600">
+                                            <span className="text-3xl font-bold text-customPurple1">
                                                 ${cartTotal.toLocaleString()}
                                             </span>
                                         </div>
 
-                                        <button className="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-lg transition mb-3">
+                                        <button className="w-full bg-customPurple1 hover:bg-purple-600 text-white font-bold py-3 rounded-lg transition mb-3">
                                             Proceder al Pago
                                         </button>
                                     </div>

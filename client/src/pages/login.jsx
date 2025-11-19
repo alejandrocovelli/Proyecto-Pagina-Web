@@ -3,6 +3,7 @@ import Header from "../components/header"
 import TabNavegacion from "../components/TabNavegacion"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth.js"
+import fondo from "../../public/Group 69.png"
 
 export default function Login() {
     const { loginHandler, registerHandler } = useAuth();
@@ -40,7 +41,7 @@ export default function Login() {
         <div className="w-full min-h-screen flex flex-col">
             <Header currentPage={isLogin ? "Login" : "Registro"} />
 
-            <div className={`relative flex-1 bg-customBlue2 flex flex-col items-center overflow-hidden ${isLogin ? 'justify-start' : 'justify-end'}`}>
+            <div style={{ backgroundImage: `url(${fondo})` }} className={`relative flex-1 bg-customBlue2 bg-cover bg-center w-screen flex flex-col items-center overflow-hidden ${isLogin ? 'justify-start' : 'justify-end'}`}>
 
                 <div className={`z-10 text-center ${isLogin ? 'block' : 'hidden'}`}>
                     <img src="../../logoPaperUniverse.svg" alt="logo" className="hidden md:block h-40 md:h-60 mx-auto" />

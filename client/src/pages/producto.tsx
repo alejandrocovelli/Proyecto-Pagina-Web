@@ -80,7 +80,7 @@ export default function Producto() {
     <div className="w-full min-h-screen flex flex-col">
       <Header currentPage="Producto" />
 
-      <div className="flex-1 h-full bg-gray-100 py-8 px-4">
+      <div className="flex-1 h-full bg-customBlue2 py-8 px-4">
         <div className="max-w-7xl h-full mx-auto flex flex-col min-h-0">
           {/* Breadcrumb */}
           <div className="text-gray-600 font-medium mb-8 bg-white p-4 rounded-lg">
@@ -104,7 +104,7 @@ export default function Producto() {
             {/* Right column: spans two columns on md (use col-span 2) */}
             <div className="md:col-span-3 row-span-2 bg-white rounded-lg h-full pt-6 mt-auto">
               {/* Title */}
-              <div className="pb-4 px-6 border-b-8 border-gray-100">
+              <div className="pb-4 px-6 border-b-8 border-customBlue2">
                 <h1 className="text-3xl font-bold text-customPurple1">
                   {producto?.nombre}
                 </h1>
@@ -121,7 +121,7 @@ export default function Producto() {
                 </div>
 
                 {/* Price and actions (takes remaining columns) */}
-                <div className="w-3/5 py-6 flex flex-col justify-center items-center relative border-l-8 border-gray-100">
+                <div className="w-3/5 py-6 flex flex-col justify-center items-center relative border-l-8 border-customBlue2">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="text-center">
                       <span className="text-4xl font-bold text-customPurple1">
