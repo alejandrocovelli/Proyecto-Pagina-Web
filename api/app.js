@@ -11,7 +11,13 @@ const app = express();
 
 
 // Habilitar CORS para permitir peticiones desde diferentes dominios
-app.use(cors());
+app.use(cors({
+    origin: "https://proyecto-pagina-web-seven.vercel.app",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true
+}));
+
+app.options("*", cors());
 
 // Morgan: Registra todas las peticiones HTTP en la consola (modo desarrollo)
 app.use(morgan("dev"));
