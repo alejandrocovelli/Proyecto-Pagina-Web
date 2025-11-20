@@ -9,35 +9,26 @@ import { applyAssociations } from "./models/associations.js";
 // Crear instancia de Express
 const app = express();
 
-// CORS - permite múltiples dominios de Vercel
-const allowedOrigins = [
-    "https://proyecto-pagina-web-seven.vercel.app",
-    "https://proyecto-pagina-79xjfnc3y-alejandro-covellis-projects.vercel.app",
-    "http://localhost:5173", // para desarrollo local
-    "http://localhost:3000"
-];
-
-// Habilitar CORS para permitir peticiones desde diferentes dominios
-app.use(cors({
-    origin: function (origin, callback) {
-        // Permitir requests sin origin (como Postman, curl, o mobile apps)
-        if (!origin) return callback(null, true);
-        
-        // Permitir cualquier dominio de vercel.app en producción
-        if (origin.includes('.vercel.app')) {
-            return callback(null, true);
-        }
-        
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// CORS - configuración permisiva para Vercel
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    
+    // Permitir todos los dominios de Vercel y localhost
+    if (!origin || origin.includes('.vercel.app') || origin.includes('localhost')) {
+        res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    }
+    
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    
+    // Manejar preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    
+    next();
+});
 
 // Morgan: Registra todas las peticiones HTTP en la consola (modo desarrollo)
 app.use(morgan("dev"));
