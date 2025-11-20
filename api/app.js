@@ -17,8 +17,6 @@ app.use(cors({
     credentials: true
 }));
 
-app.options("/*", cors());
-
 // Morgan: Registra todas las peticiones HTTP en la consola (modo desarrollo)
 app.use(morgan("dev"));
 
