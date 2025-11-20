@@ -25,7 +25,8 @@ Usuario.init({
     
     contraseña: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
+        field: 'contrase'
     },
     
     /**
