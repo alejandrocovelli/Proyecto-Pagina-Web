@@ -112,7 +112,7 @@ export default function Categorias() {
           {/* Main Content */}
           <main
             style={{ backgroundImage: `url(${fondo})` }}
-            className="flex-1 bg-customBlue2 bg-cover bg-center w- relative z-10 px-20"
+            className="flex-1 bg-customBlue2 bg-cover bg-center w-full min-h-screen relative z-10 px-20"
           >
             {user && user.tipo == 1 && (
               <button
@@ -122,7 +122,7 @@ export default function Categorias() {
                 +
               </button>
             )}
-            <div className="p-8">
+            <div className="pt-8 md:p-8">
               {/* Breadcrumb */}
               <div className="text-gray-600 text-sm mb-8">
                 <span className="text-customPurple1">Categoría /</span>

@@ -44,7 +44,7 @@ export default function Inicio() {
             </div>
 
             {/* Best Sellers Section */}
-            <section style={{ backgroundImage: `url(${fondo})` }} className="pb-12 bg-customBlue2 bg-cover bg-center w-full">
+            <section style={{ backgroundImage: `url(${fondo})` }} className="min-h-screen pb-12 bg-customBlue2 bg-cover bg-center w-full">
                 <div className="relative">
                     <div className="flex justify-center items-center py-4 mb-4 bg-customPurple1">
                         <h2 className="text-2xl sm:text-3xl font-bold text-white text-center">💖 Lo Mas Vendido</h2>

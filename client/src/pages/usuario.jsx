@@ -2,7 +2,6 @@ import Header from "../components/Header"
 import UsuarioCard from "../components/UsuarioCard"
 import { User, Gem, CreditCard, DoorClosed, Search, MapPin } from "lucide-react"
 import { useAuth } from "../hooks/useAuth";
-import { useEffect, useState } from "react";
 import fondo from "../../public/Group 69.png"
 
 export default function Usuario() {

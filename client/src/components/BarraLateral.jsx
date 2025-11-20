@@ -24,7 +24,7 @@ export default function BarraLateral({ sections, onClick, isOpen, onClose }) {
 
                 <div className="space-y-1">
                     {sections.map((section, idx) => (
-                        <div key={idx} className="mb-8">
+                        <div key={idx}>
                             <h3
                                 onClick={() => onClick(section.id)}
                                 className="w-full px-4 py-3 rounded-lg transition font-medium uppercase cursor-pointer hover:bg-gray-100"

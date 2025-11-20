@@ -58,7 +58,7 @@ export default function Catalogo() {
             </div>
 
             {/* Categorias Grid */}
-            <section style={{ backgroundImage: `url(${fondo})` }} className="relative py-12 px-8 bg-customBlue2 bg-cover bg-center w-screen">
+            <section style={{ backgroundImage: `url(${fondo})` }} className="relative min-h-screen py-12 px-8 bg-customBlue2 bg-cover bg-center w-screen">
                 {user && user.tipo == 1 && <button
                     className="absolute right-5 top-2 bg-customPurple1 text-white px-5 py-2 rounded text-sm hover:bg-purple-600 transition"
                     onClick={() => setOpenCategoriaModal(true)}
