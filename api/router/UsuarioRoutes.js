@@ -10,7 +10,7 @@ router.get("/", UsuarioController.getUsuarios);
 
 router.get("/:id", validateUsuarioId, UsuarioController.getUsuarioById);
 
-router.post("/", validateCreateUsuario, AuthMiddleware, UsuarioController.createUsuario);
+router.post("/", validateCreateUsuario, UsuarioController.createUsuario);
 
 router.put("/:id", [...validateUsuarioId, ...validateUpdateUsuario], AuthMiddleware, UsuarioController.updateUsuario);
 
